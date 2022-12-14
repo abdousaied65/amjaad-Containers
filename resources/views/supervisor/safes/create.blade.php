@@ -19,8 +19,8 @@
     <div class="row row-sm">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-header pb-0">
-                    <h5 class="alert alert-md alert-success">
+                <div class="card-header bg-primary pb-0">
+                    <h5 class="text-white text-center p-1">
                         اضافة خزنة جديدة
                     </h5>
                 </div>
@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                            <button class="btn btn-info pd-x-20" type="submit">
+                            <button class="btn btn-primary pd-x-20" type="submit">
                                 اضافة
                             </button>
                         </div>

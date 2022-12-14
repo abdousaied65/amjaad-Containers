@@ -89,7 +89,7 @@ $Arabic = new Arabic();
                         {{$settings->tax_number}}
                     </td>
                     <td class="text-center" style="width: 40%!important;">
-                        <img src="{{asset('admin-assets/img/logo.png')}}" style="width: 100px; height: 100px;" alt="">
+                        <img src="{{asset('assets/img/logo.png')}}" style="width: 100px; height: 100px;" alt="">
                         <br>
                         <h1 style="font-size: 30px!important;">
                             اتفاقية تأجير حاوية ونقل مخلفات
@@ -156,7 +156,7 @@ $Arabic = new Arabic();
                 </span>
                 <span style="margin-left: 100px;">
                     ويمثلها :
-                    {{$contract->company->company_owner}}
+                    {{$contract->company->company_name}}
                 </span>
                 <span>
                     طرف ثانى
@@ -291,7 +291,7 @@ $Arabic = new Arabic();
                     2 - مدة بقاء الحاوية للرد الواحد بموقع العمل لدى الطرف الثاني خمس ايام من تاريخ بداية العمل أو في
                     حالة امتلائها أيهما أقرب
                     <br>
-                    3 - في حالة بقاء الحاوية مدة تزيد عن خمس أيام بناء على طلب الطرف الثاني يضاف مبلغ وقدره فقط 20
+                    3 - في حالة بقاء الحاوية مدة تزيد عن خمس أيام بناء على طلب الطرف الثاني يضاف مبلغ وقدره 20
                     فقط عشرون فقط
                     <br>
                     4 - يقوم الطرف الثاني بدفع كامل المبلغ مقدماً
@@ -346,7 +346,7 @@ $Arabic = new Arabic();
                     <td style="width: 30%!important;">
                         الطرف الثانى :
                         <br>
-                        {{$contract->company->company_owner}}
+                        {{$contract->company->company_name}}
                     </td>
                 </tr>
                 </tbody>

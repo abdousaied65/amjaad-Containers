@@ -18,14 +18,12 @@
             @endif
 
             <div class="card">
+                <div class="card-header bg-primary">
+                    <h5 class="text-white text-center p-1">
+                        تعديل بيانات المشرف
+                    </h5>
+                </div>
                 <div class="card-body">
-                    <div class="col-lg-12 margin-tb">
-                        <h5 style="min-width: 300px;" class="pull-right alert alert-md alert-success">
-                            تعديل بيانات المشرف
-                        </h5>
-                        <div class="clearfix"></div>
-                    </div>
-                    <br>
                     {!! Form::model($supervisor, ['method' => 'PATCH','enctype' => 'multipart/form-data','route' => ['supervisor.supervisors.update', $supervisor->id]]) !!}
                     <div class="row mb-3 mt-3">
                         <div class="parsley-input col-md-4" id="fnWrapper">
@@ -39,8 +37,7 @@
                         <div class="parsley-input col-md-4 mg-t-20 mg-md-t-0" id="lnWrapper">
                             <label> مجموعة المشرفين </label>
                             {!! Form::select('role_name', $roles,$supervisorRole,
-                                        array('required','class' => 'selectpicker form-control','data-live-search' => 'true','data-style'=>'btn-info'
-                                        ,'title' => 'مجموعة المشرفين',)
+                                        array('required','class' => 'data-table form-control')
                                     )
                                     !!}
                         </div>
@@ -50,11 +47,6 @@
                         <div class="parsley-input col-md-4 mg-t-20 mg-md-t-0" id="lnWrapper">
                             <label> كلمة المرور : <span class="tx-danger">*</span></label>
                             <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                        <span class="input-group-text showPassword" id="basic-addon1">
-                                            <i class="fa fa-eye basic-addon1"></i>
-                                        </span>
-                                </div>
                                 <input id="password" type="password"
                                        class="form-control @error('password') is-invalid @enderror text-left"
                                        dir="ltr" name="password"
@@ -65,12 +57,6 @@
                         <div class="parsley-input col-md-4 mg-t-20 mg-md-t-0" id="lnWrapper">
                             <label> تأكيد كلمة المرور : <span class="tx-danger">*</span></label>
                             <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                        <span class="input-group-text showPassword2"
-                                              id="basic-addon2">
-                                            <i class="fa fa-eye basic-addon2"></i>
-                                        </span>
-                                </div>
                                 <input id="confirm-password" type="password"
                                        class="form-control @error('password') is-invalid @enderror text-left"
                                        dir="ltr" name="confirm-password"
@@ -89,7 +75,7 @@
 
                     </div>
                     <div class="col-lg-12 text-center mt-3 mb-3">
-                        <button class="btn btn-info btn-md" type="submit"> تحديث</button>
+                        <button class="btn btn-primary btn-md" type="submit"> تحديث</button>
                     </div>
                     {!! Form::close() !!}
                 </div>

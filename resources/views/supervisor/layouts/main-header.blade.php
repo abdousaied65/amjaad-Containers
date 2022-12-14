@@ -1,66 +1,63 @@
-<!-- main-header opened -->
-<div class="main-header sticky side-header nav nav-item">
+<a class="nav-link ml d-block d-xl-none menu-toggle mt-3 float-right pull-right text-right" href="#"><i class="fa fa-bars"></i></a>
+
+<!-- Body: Header -->
+<div class="body-header border-bottom d-flex py-3">
     <div class="container-fluid">
-        <div class="main-header-left ">
-            <div class="responsive-logo">
-                <a href="{{ url('/supervisor/' . $page='home') }}">
-                    <img src="{{URL::asset('admin-assets/img/logo.png')}}"
-                         class="logo-1" alt="logo"></a>
-                <a href="{{ url('/supervisor/' . $page='home') }}">
-                    <img src="{{URL::asset('admin-assets/img/favicon.png')}}"
-                         class="logo-2" alt="logo"></a>
+        <!-- header rightbar icon -->
+        <div class="h-right flex-grow-1 justify-content-end d-flex align-items-center">
+            <div class="d-flex">
+                <a class="nav-link text-primary" style="color: #333!important;" href="{{route('supervisor.profile.edit',Auth::user()->id)}}">
+                    <i class="fa fa-user"></i>
+                </a>
+                <a class="nav-link text-primary" style="color: #333!important;" href="{{route('supervisor.lock.screen')}}">
+                    <i class="fa fa-lock"></i>
+                </a>
+                <a class="nav-link" style="color: #333!important;" href="{{route('supervisor.logout')}}"
+                   onclick="event.preventDefault();document.getElementById('logout-form-2').submit();"
+                   title="Menu collapse"><i class="fa fa-power-off"></i>
+                </a>
+                <form id="logout-form-2" action="{{ route('supervisor.logout') }}" method="POST"
+                      style="display: none;">
+                    @csrf
+                </form>
             </div>
-            <div class="app-sidebar__toggle" data-toggle="sidebar">
-                <a class="open-toggle" href="#"><i class="header-icon fe fe-align-left"></i></a>
-                <a class="close-toggle" href="#"><i class="header-icons fe fe-x"></i></a>
-            </div>
-        </div>
-        <div class="main-header-right">
 
-            <div class="nav nav-item  navbar-nav-right ml-auto">
-
-                <div class="dropdown main-profile-menu nav nav-item nav-link">
-                    <a class="profile-user d-flex" href="#">
-                        @if (isset(Auth::user()->profile_pic) && !empty(Auth::user()->profile_pic) )
-                            <img src="{{asset(Auth::user()->profile_pic)}}" alt="avatar"><i></i>
-                        @else
-                            <img src="{{asset('admin-assets/img/guest.png')}}" alt="avatar"><i></i>
-                        @endif
-                    </a>
-                    <div class="dropdown-menu">
-                        <div class="main-header-profile bg-primary p-3">
-                            <div class="d-flex wd-100p">
-                                <div class="main-img-user">
-                                    @if (isset(Auth::user()->profile_pic) && !empty(Auth::user()->profile_pic) )
-                                        <img src="{{asset(Auth::user()->profile_pic)}}" alt="avatar"><i></i>
-                                    @else
-                                        <img src="{{asset('admin-assets/img/guest.png')}}" alt="avatar"><i></i>
-                                    @endif
-                                </div>
-                                <div class="mr-3 my-auto">
-                                    <h6>{{Auth::user()->name}}</h6><span>
-                                        {{Auth::user()->role_name}}
-                                    </span>
+            <div class="dropdown user-profile ms-2 ms-sm-3">
+                <a class="nav-link dropdown-toggle pulse p-0" href="#" role="button" data-bs-toggle="dropdown">
+                    <img class="avatar rounded-circle img-thumbnail" src="{{asset('assets/img/logo.png')}}" alt="">
+                </a>
+                <div class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-end p-0 m-0">
+                    <div class="card border-0 w240">
+                        <div class="card-body border-bottom">
+                            <div class="d-flex py-1">
+                                <img class="avatar rounded-circle" src="{{asset('assets/img/logo.png')}}" alt="">
+                                <div class="flex-fill ms-3">
+                                    <p class="mb-0 text-muted">
+                                        <span class="fw-bold">
+                                            {{Auth::user()->name_ar}}
+                                        </span>
+                                    </p>
+                                    <small class="text-muted">{{Auth::user()->email}}</small>
+                                    <div>
+                                        Admin
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <a class="dropdown-item" href="{{route('supervisor.profile.edit',Auth::user()->id)}}"><i
-                                class="bx bx-cog"></i> تعديل الملف الشخصى </a>
-                        <a class="dropdown-item" href="{{route('supervisor.lock.screen')}}"><i
-                                class="bx bx-lock"></i> اغلاق مؤقت للشاشة </a>
-                        <a class="dropdown-item" href="{{ route('supervisor.logout') }}"
-                           onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                            <i class="fa fa-power-off"></i> تسجيل الخروج
-                        </a>
-                        <form id="logout-form" action="{{ route('supervisor.logout') }}" method="POST"
-                              style="display: none;">
-                            @csrf
-                        </form>
+                        <div class="list-group m-2" style="direction: rtl !important;text-align: right!important;" >
+                            <a class="list-group-item list-group-item-action border-0" style="color: #333!important;" href="{{route('supervisor.logout')}}"
+                               onclick="event.preventDefault();document.getElementById('logout-form-2').submit();"
+                               title="Menu collapse"><i class="w30 fa fa-power-off"></i>
+                               تسجيل الخروج
+                            </a>
+                            <form id="logout-form-2" action="{{ route('supervisor.logout') }}" method="POST"
+                                  style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-<!-- /main-header -->

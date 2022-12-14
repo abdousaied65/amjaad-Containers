@@ -97,7 +97,7 @@
                         {{$settings->tax_number}}
                     </td>
                     <td class="text-center" style="width: 40%!important;">
-                        <img src="{{asset('admin-assets/img/logo.png')}}" style="width: 100px; height: 100px;" alt="">
+                        <img src="{{asset('assets/img/logo.png')}}" style="width: 100px; height: 100px;" alt="">
                         <br>
                         <h1>
                             فاتورة ضريبية مبسطة
@@ -170,17 +170,22 @@
                         <thead>
                         <tr class="text-center">
                             <th class="text-center">المادة</th>
+                            <th class="text-center">سعر مفرد</th>
                             <th class="text-center">الكمية</th>
-                            <th class="text-center">السعر</th>
-                            <th class="text-center">القيمة المضافة %</th>
+                            <th class="text-center">اجمالى بدون ضريبة</th>
+                            <th class="text-center">نسبة القيمة المضافة %</th>
                             <th class="text-center">القيمة المضافة</th>
                             <th class="text-center">المجموع بعد الضريبة</th>
                         </tr>
+
                         </thead>
                         <tbody>
                         <tr>
                             <td>
                                 حاويات
+                            </td>
+                            <td>
+                                {{$bill->unit_price}}
                             </td>
                             <td>
                                 {{$bill->contract->containers_number}}
@@ -189,7 +194,7 @@
                                 {{$bill->total_before_discount}}
                             </td>
                             <td>
-                                15
+                                15 %
                             </td>
                             <td>
                                 {{$bill->vat_total}}
@@ -204,7 +209,7 @@
                         <tbody>
                         <tr>
                             <td>
-                                مبلغ الفاتورة
+                                الاجمالى بدون الضريبة
                             </td>
                             <td>
                                 {{$bill->total_before_discount}}
@@ -212,7 +217,7 @@
                         </tr>
                         <tr>
                             <td>
-                                القيمة المضافة
+                                الضريبة
                             </td>
                             <td>
                                 {{$bill->vat_total}}
@@ -220,7 +225,7 @@
                         </tr>
                         <tr>
                             <td>
-                                المبلغ الصافي
+                                الاجمالى شامل الضريبة
                             </td>
                             <td>
                                 {{$bill->final_total}}
@@ -228,7 +233,7 @@
                         </tr>
                         <tr>
                             <td>
-                                المبلغ المقبوض
+                                المبلغ المدفوع
                             </td>
                             <td>
                                 {{$bill->paid}}
@@ -275,6 +280,9 @@
                     <li>
                         المبلغ المدفوع لا يسترد بعد استخراج الترخيص
                     </li>
+                    <li>
+                        على الطرف الثاني سداد رسوم المكب قبل طلب الحاوية
+                    </li>
                 </ol>
             </div>
 
@@ -308,7 +316,7 @@
                     <td style="width: 30%!important;">
                         الطرف الثانى :
                         <br>
-                        {{$contract->company->company_owner}}
+                        {{$contract->company->company_name}}
                     </td>
                 </tr>
                 </tbody>

@@ -24,8 +24,7 @@
 </style>
 @section('content')
     @if (session('success'))
-        <div class="alert alert-success  fade show">
-            <button class="close" data-dismiss="alert" aria-label="Close">×</button>
+        <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
@@ -33,48 +32,48 @@
     <div class="row row-sm">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-header pb-0">
-                    <div class="col-lg-12 margin-tb">
-                        <h5 style="min-width: 300px;" class="pull-right alert alert-md alert-success">
-                            عرض كل الشركات
-                        </h5>
-                    </div>
-                    <div class="clearfix"></div>
+                <div class="card-header bg-primary pb-0">
+                    <h5 class="p-1 text-center text-white">
+                        عرض كل الشركات
+                    </h5>
                 </div>
-                <div class="row mt-1 mb-1 text-center justify-content-center align-content-center">
-                    <form method="GET" action="{{route('print.selected.companies')}}">
-                        <button type="submit" class="btn btn-md btn-warning m-1 print_selected">
+                <div class="row mt-3 mb-1 text-center justify-content-center align-content-center">
+                    <form class="col-6" method="GET" action="{{route('print.selected.companies')}}">
+                        <button type="submit" class="btn btn-md btn-light-warning m-1 print_selected">
                             <i class="fa fa-print"></i>
                             طباعة
                         </button>
                     </form>
-                    <form method="POST" action="{{route('export.companies.excel')}}">
+                    <form class="col-6" method="POST" action="{{route('export.companies.excel')}}">
                         @csrf
                         @method('POST')
-                        <button type="submit" class="btn btn-md btn-success m-1">
+                        <button type="submit" class="btn btn-md btn-light-success m-1">
                             <i class="fa fa-file-excel-o"></i>
                             تصدير الكل EXCEL
                         </button>
                     </form>
 
-                    <form method="POST" class="" id="myForm" action="{{route('remove.selected.companies')}}">
+                    <form class="col-6" method="POST" id="myForm"
+                          action="{{route('remove.selected.companies')}}">
                         @csrf
                         @method('POST')
-                        <button type="submit" class="btn btn-md btn-danger m-1 remove_selected">
+                        <button type="submit" class="btn btn-md btn-light-danger m-1 remove_selected">
                             <i class="fa fa-trash"></i>
                             حذف
                         </button>
                     </form>
-
-                    <a href="{{route('supervisor.companies.create')}}" role="button" class="btn btn-md btn-info m-1">
-                        <i class="fa fa-plus"></i>
-                        اضافة
-                    </a>
+                    <div class="col-6">
+                        <a href="{{route('supervisor.companies.create')}}" role="button"
+                           class="btn btn-md btn-light-info">
+                            <i class="fa fa-plus"></i>
+                            اضافة
+                        </a>
+                    </div>
                 </div>
                 <div class="card-body p-1 m-1">
-                    <div class="table-responsive hoverable-table">
-                        <table class="display w-100  text-nowrap table-bordered" id="example-table"
-                               style="text-align: center;">
+                    <div class="table-responsive table-hover">
+                        <table id="example-table"
+                               class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
                             <thead>
                             <tr>
                                 <th class="border-bottom-0 text-center">
@@ -88,7 +87,7 @@
                                 <th class="border-bottom-0 text-center"> العنوان</th>
                                 <th class="border-bottom-0 text-center"> الرقم الضريبى</th>
                                 <th class="border-bottom-0 text-center"> السجل التجارى</th>
-                                <th class="border-bottom-0 text-center"> مديونية الشركة </th>
+                                <th class="border-bottom-0 text-center"> مديونية الشركة</th>
                                 <th style="width: 5%!important;" class="border-bottom-0 text-center">تحكم</th>
                             </tr>
                             </thead>
@@ -178,8 +177,6 @@
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header text-center">
                         <h6 class="modal-title w-100" style="font-family: 'Almarai'; ">حذف شركة</h6>
-                        <button aria-label="Close" class="close"
-                                data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <form action="{{ route('supervisor.companies.destroy', 'test') }}" method="post">
                         {{ method_field('delete') }}

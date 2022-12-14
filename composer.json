@@ -28,7 +28,8 @@
         "salla/zatca": "^2.0",
         "sentry/sentry-laravel": "^2.3",
         "simplesoftwareio/simple-qrcode": "4.2",
-        "spatie/laravel-permission": "^3.18"
+        "spatie/laravel-permission": "^3.18",
+        "ext-intl": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

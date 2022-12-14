@@ -20,8 +20,7 @@
 </style>
 @section('content')
     @if (session('success'))
-        <div class="alert alert-success  fade show">
-            <button class="close" data-dismiss="alert" aria-label="Close">×</button>
+        <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
@@ -29,48 +28,51 @@
     <div class="row row-sm">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-header pb-0">
+                <div class="card-header bg-primary pb-0">
                     <div class="col-lg-12 margin-tb">
-                        <h5 style="min-width: 300px;" class="pull-right alert alert-md alert-success">
+                        <h5 class="text-center p-1 text-white">
                             عرض كل المشرفين
                         </h5>
                     </div>
-                    <div class="clearfix"></div>
                 </div>
                 <div class="row mt-1 mb-1 text-center justify-content-center align-content-center">
-                    <form method="GET" action="{{route('print.selected.supervisors')}}">
-                        <button type="submit" class="btn btn-md btn-warning m-1 print_selected">
+                    <form class="col-6" method="GET" action="{{route('print.selected.supervisors')}}">
+                        <button type="submit" class="btn btn-md btn-light-warning m-1 print_selected">
                             <i class="fa fa-print"></i>
                             طباعة
                         </button>
                     </form>
-                    <form method="POST" action="{{route('export.supervisors.excel')}}">
+                    <form class="col-6" method="POST" action="{{route('export.supervisors.excel')}}">
                         @csrf
                         @method('POST')
-                        <button type="submit" class="btn btn-md btn-success m-1">
+                        <button type="submit" class="btn btn-md btn-light-success m-1">
                             <i class="fa fa-file-excel-o"></i>
                             تصدير الكل EXCEL
                         </button>
                     </form>
 
-                    <form method="POST" class="" id="myForm" action="{{route('remove.selected.supervisors')}}">
+                    <form class="col-6" method="POST" id="myForm"
+                          action="{{route('remove.selected.supervisors')}}">
                         @csrf
                         @method('POST')
-                        <button type="submit" class="btn btn-md btn-danger m-1 remove_selected">
+                        <button type="submit" class="btn btn-md btn-light-danger m-1 remove_selected">
                             <i class="fa fa-trash"></i>
                             حذف
                         </button>
                     </form>
-
-                    <a href="{{route('supervisor.supervisors.create')}}" role="button" class="btn btn-md btn-info m-1">
-                        <i class="fa fa-plus"></i>
-                        اضافة
-                    </a>
+                    <div class="col-6">
+                        <a href="{{route('supervisor.supervisors.create')}}" role="button"
+                           class="btn btn-md btn-light-info">
+                            <i class="fa fa-plus"></i>
+                            اضافة
+                        </a>
+                    </div>
                 </div>
+
                 <div class="card-body p-1 m-1">
-                    <div class="table-responsive hoverable-table">
-                        <table class="display w-100  text-nowrap table-bordered" id="example-table"
-                               style="text-align: center;">
+                    <div class="table-responsive table-hover">
+                        <table id="example-table"
+                               class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
                             <thead>
                             <tr>
                                 <th class="border-bottom-0 text-center">
@@ -114,43 +116,43 @@
                                         {{$supervisor->role_name}}
                                     </td>
                                     <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn btn-primary dropdown-toggle"
-                                                    data-toggle="dropdown">
-                                                <i class="fa fa-wrench"></i>
-                                                ادارة
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                @can('عرض مشرف')
-                                                    <a href="{{ route('supervisor.supervisors.show', $supervisor->id) }}"
-                                                       class="dropdown-item">
-                                                        <i class="fa fa-eye"></i>
-                                                        عرض
+                                        <button class="btn btn-primary btn-sm dropdown-toggle" type="button"
+                                                id="dropdownMenuButton"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-wrench"></i>
+                                            تحكم
+                                        </button>
+                                        <ul class="dropdown-menu border-0 shadow">
+                                            @can('عرض مشرف')
+                                                <a href="{{ route('supervisor.supervisors.show', $supervisor->id) }}"
+                                                   class="dropdown-item">
+                                                    <i class="fa fa-eye"></i>
+                                                    عرض
+                                                </a>
+                                            @endcan
+                                            @can('تعديل مشرف')
+                                                <a href="{{ route('supervisor.supervisors.edit', $supervisor->id) }}"
+                                                   class="dropdown-item">
+                                                    <i class="fa fa-edit"></i>
+                                                    تعديل
+                                                </a>
+                                            @endcan
+                                            @can('حذف مشرف')
+                                                @if (Auth::user()->role_name == "مدير النظام")
+                                                    <a class="dropdown-item delete_supervisor"
+                                                       supervisor_id="{{ $supervisor->id }}"
+                                                       email="{{ $supervisor->email }}" data-toggle="modal"
+                                                       href="#modaldemo8">
+                                                        <i class="fa fa-trash"></i>
+                                                        حذف
                                                     </a>
-                                                @endcan
-                                                @can('تعديل مشرف')
-                                                    <a href="{{ route('supervisor.supervisors.edit', $supervisor->id) }}"
-                                                       class="dropdown-item">
-                                                        <i class="fa fa-edit"></i>
-                                                        تعديل
-                                                    </a>
-                                                @endcan
-                                                @can('حذف مشرف')
-                                                    @if (Auth::user()->role_name == "مدير النظام")
-                                                        <a class="dropdown-item delete_supervisor"
-                                                           supervisor_id="{{ $supervisor->id }}"
-                                                           email="{{ $supervisor->email }}" data-toggle="modal"
-                                                           href="#modaldemo8">
-                                                            <i class="fa fa-trash"></i>
-                                                            حذف
-                                                        </a>
-                                                    @endif
-                                                @endcan
-                                            </div>
-                                        </div>
+                                                @endif
+                                            @endcan
+                                        </ul>
                                     </td>
                                 </tr>
                             @endforeach
+                            </tbody>
                             <tfoot>
                             <tr>
                                 <th></th>
@@ -162,7 +164,6 @@
                                 <th></th>
                             </tr>
                             </tfoot>
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -176,8 +177,7 @@
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header text-center">
                         <h6 class="modal-title w-100" style="font-family: 'Almarai'; ">حذف مشرف</h6>
-                        <button aria-label="Close" class="close"
-                                data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+
                     </div>
                     <form action="{{ route('supervisor.supervisors.destroy', 'test') }}" method="post">
                         {{ method_field('delete') }}
@@ -203,8 +203,7 @@
                 <div class="modal-header text-center">
                     <h6 class="modal-title w-100"
                         style="font-family: 'Almarai'; ">عرض صورة المشرف</h6>
-                    <button aria-label="Close" class="close"
-                            data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+
                 </div>
                 <div class="modal-body">
                     <img id="image_larger" alt="image" style="width: 100%;height: 400px!important;  "/>

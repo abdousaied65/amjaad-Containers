@@ -18,8 +18,7 @@
 </style>
 @section('content')
     @if (session('success'))
-        <div class="alert alert-success  fade show">
-            <button class="close" data-dismiss="alert" aria-label="Close">×</button>
+        <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
@@ -34,18 +33,15 @@
         <div class="col-xl-12">
 
             <div class="card">
-                <div class="card-header pb-0">
-                    <div class="col-lg-12 margin-tb">
-                        <h5 style="min-width: 300px;" class="text-center alert alert-md alert-success">
-                            البحث فى العقود المنفذة
-                        </h5>
-                    </div>
-                    <div class="clearfix"></div>
+                <div class="card-header bg-primary pb-0">
+                    <h5 class="text-center text-white p-1">
+                        البحث فى العقود المنفذة
+                    </h5>
                 </div>
                 <div class="card-body p-2 mt-3 mb-3">
                     <div class="col-lg-12">
                         <div class="col-lg-4 d-inline float-right pull-right">
-                            <form action="{{route('search.executed.by.company')}}" method="post">
+                            <form class="p-2" action="{{route('search.executed.by.company')}}" method="post">
                                 @csrf
                                 @method('POST')
                                 <label class="d-block">
@@ -53,7 +49,6 @@
                                 </label>
                                 <select required class="form-control selectpicker show-tick"
                                         data-live-search="true" data-title="اختر الشركة"
-                                        data-style="btn-secondary"
                                         name="company_id" id="company_id">
                                     @foreach($companies as $company)
                                         <option
@@ -71,7 +66,7 @@
                             </form>
                         </div>
                         <div class="col-lg-4 col-lg-4 d-inline float-right pull-right">
-                            <form action="{{route('search.executed.by.phone')}}" method="post">
+                            <form class="p-2" action="{{route('search.executed.by.phone')}}" method="post">
                                 @csrf
                                 @method('POST')
                                 <label class="d-block">
@@ -89,7 +84,7 @@
                             </form>
                         </div>
                         <div class="col-lg-4 col-lg-4 d-inline float-right pull-right">
-                            <form action="{{route('search.executed.by.bill')}}" method="post">
+                            <form class="p-2" action="{{route('search.executed.by.bill')}}" method="post">
                                 @csrf
                                 @method('POST')
                                 <label class="d-block">
@@ -111,18 +106,15 @@
             </div>
 
             <div class="card">
-                <div class="card-header pb-0">
-                    <div class="col-lg-12 margin-tb">
-                        <h5 style="min-width: 300px;" class="text-center alert alert-md alert-success">
-                            عرض كل العقود والفواتير المنفذة المسلمة
-                        </h5>
-                    </div>
-                    <div class="clearfix"></div>
+                <div class="card-header bg-danger pb-0">
+                    <h5 class="text-center text-white p-1">
+                        عرض كل العقود والفواتير المنفذة المسلمة
+                    </h5>
                 </div>
                 <div class="card-body p-1 m-1">
-                    <div class="table-responsive hoverable-table">
-                        <table class="display w-100  text-nowrap table-bordered" id="example-table"
-                               style="text-align: center;">
+                    <div class="table-responsive table-hover">
+                        <table id="example-table"
+                               class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
                             <thead>
                             <tr>
                                 <th class="border-bottom-0 text-center">#</th>
@@ -216,17 +208,11 @@
                                     <td>{{$bill->time}}</td>
                                     <td>
                                         @if($bill->payment_status == "unpaid")
-                                            <span class="badge badge-danger pd-10">
-                                                غير مدفوعة
-                                            </span>
+                                            غير مدفوعة
                                         @elseif($bill->payment_status == "totally paid")
-                                            <span class="badge badge-success pd-10">
-                                                 مدفوعة بالكامل
-                                            </span>
+                                            مدفوعة بالكامل
                                         @elseif($bill->payment_status == "partially paid")
-                                            <span class="badge badge-info pd-10">
-                                                 مدفوعة جزئيا
-                                            </span>
+                                            مدفوعة جزئيا
                                         @endif
                                     </td>
                                     <td>{{$bill->discount_total}}</td>
@@ -287,8 +273,7 @@
                     <h6 class="modal-title w-100" style="font-family: 'Almarai'; ">
                         عرض تفاصيل العقد
                     </h6>
-                    <button aria-label="Close" class="close"
-                            data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+
                 </div>
                 <div class="modal-body view_contract_details">
 

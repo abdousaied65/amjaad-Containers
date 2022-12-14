@@ -1,18 +1,12 @@
 @extends('supervisor.layouts.master')
 <!-- Internal Data table css -->
 <style>
-
-    [role='combobox'] {
-        left: -90px !important;
-        width: 220px;
-    }
 </style>
 
 @section('content')
     @if (session('success'))
 
-        <div class="alert alert-success  fade show">
-            <button class="close" data-dismiss="alert" aria-label="Close">×</button>
+        <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
@@ -33,8 +27,8 @@
         <div class="row mt-4">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title" style="font-family: 'Almarai';" id="tel-repeater">البيانات الاساسية</h4>
+                    <div class="card-header bg-primary">
+                        <h4 class="card-title text-center text-white" style="font-family: 'Almarai';">البيانات الاساسية</h4>
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
@@ -42,9 +36,6 @@
                                   enctype="multipart/form-data">
                                 @csrf
                                 @method('PATCH')
-                                <div class="row mb-3">
-
-                                </div>
                                 <div class="row mb-3">
                                     <div class="form-group col-md-3 pull-right ">
                                         <label for=""> الاسم </label>
@@ -92,11 +83,11 @@
                         </div>
                         <div class="card-footer">
                             <div class="col-lg-12 text-center">
-                                <button type="reset" name="reset" class="btn btn-info btn-md">
-                                    <i class="la la-refresh"></i> اعادة ضبط
+                                <button type="reset" name="reset" class="btn btn-primary btn-md">
+                                    <i class="fa fa-refresh"></i> اعادة ضبط
                                 </button>
                                 <button type="submit" name="submit" class="btn btn-success btn-md">
-                                    <i class="la la-check"></i> تحديث البيانات
+                                    <i class="fa fa-check"></i> تحديث البيانات
                                 </button>
                             </div>
                         </div>

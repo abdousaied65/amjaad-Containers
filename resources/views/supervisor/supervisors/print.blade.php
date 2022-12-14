@@ -69,7 +69,7 @@
     <tbody>
     <tr>
         <td class="text-center">
-            <img style="width: 100px!important; height: 100px!important;" src="{{asset('admin-assets/img/logo.png')}}" alt="">
+            <img style="width: 100px!important; height: 100px!important;" src="{{asset('assets/img/logo.png')}}" alt="">
         </td>
     </tr>
     <tr>

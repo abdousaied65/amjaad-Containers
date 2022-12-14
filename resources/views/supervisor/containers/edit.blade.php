@@ -18,31 +18,33 @@
             @endif
 
             <div class="card">
+                <div class="card-header bg-primary">
+                    <h5 class="text-center text-white p-1">
+                        تعديل بيانات الحاوية
+                    </h5>
+                </div>
                 <div class="card-body">
-                    <div class="col-lg-12 margin-tb">
-                        <h5 style="min-width: 300px;" class="pull-right alert alert-md alert-success">
-                            تعديل بيانات الحاوية
-                        </h5>
-                        <div class="clearfix"></div>
-                    </div>
-                    <br>
                     {!! Form::model($container, ['method' => 'PATCH','enctype' => 'multipart/form-data','route' => ['supervisor.containers.update', $container->id]]) !!}
                     <div class="row mb-3 mt-3">
                         <div class="col-md-3">
                             <label> اسم الحاوية <span class="text-danger">*</span></label>
-                            <input value="{{$container->name}}" class="form-control mg-b-20" name="name" required="" type="text">
+                            <input value="{{$container->name}}" class="form-control mg-b-20" name="name" required=""
+                                   type="text">
                         </div>
                         <div class="col-md-3">
                             <label> مقاس الحاوية <span class="text-danger">*</span></label>
-                            <input value="{{$container->measure}}" class="form-control mg-b-20" name="measure" required="" type="text">
+                            <input value="{{$container->measure}}" class="form-control mg-b-20" name="measure"
+                                   required=""
+                                   type="text">
                         </div>
                         <div class="col-md-3">
-                            <label> مبلغ الايجار  غير شامل الضريبة <span class="text-danger">*</span></label>
-                            <input value="{{$container->rent_amount}}" class="form-control mg-b-20" name="rent_amount" required="" type="text">
+                            <label> مبلغ الايجار غير شامل الضريبة <span class="text-danger">*</span></label>
+                            <input value="{{$container->rent_amount}}" class="form-control mg-b-20" name="rent_amount"
+                                   required="" type="text">
                         </div>
                         <div class="col-md-3">
                             <label> الحالة <span class="text-danger">*</span></label>
-                            <select name="status" required class="form-control">
+                            <select name="status" required class="form-control data-table w-100">
                                 <option value=""> اختر الحالة</option>
                                 <option @if($container->status == "مؤجرة") selected @endif value="مؤجرة">مؤجرة</option>
                                 <option @if($container->status == "فارغة") selected @endif value="فارغة">فارغة</option>
@@ -51,13 +53,14 @@
                     </div>
 
                     <div class="col-lg-12 text-center mt-3 mb-3">
-                        <button class="btn btn-info btn-md" type="submit"> تحديث</button>
+                        <button class="btn btn-primary btn-md" type="submit"> تحديث</button>
                     </div>
                     {!! Form::close() !!}
                 </div>
             </div>
         </div>
     </div>
+
     <!-- main-content closed -->
 
     <script src="{{asset('admin-assets/js/jquery.min.js')}}"></script>

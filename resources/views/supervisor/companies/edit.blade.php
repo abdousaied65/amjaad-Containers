@@ -18,14 +18,12 @@
             @endif
 
             <div class="card">
-                <div class="card-body">
-                    <div class="col-lg-12 margin-tb">
-                        <h5 style="min-width: 300px;" class="pull-right alert alert-md alert-success">
+                <div class="card-header bg-primary">
+                        <h5 class="p-1 text-white text-center">
                             تعديل بيانات الشركة
                         </h5>
-                        <div class="clearfix"></div>
-                    </div>
-                    <br>
+                </div>
+                <div class="card-body">
                     {!! Form::model($company, ['method' => 'PATCH','enctype' => 'multipart/form-data','route' => ['supervisor.companies.update', $company->id]]) !!}
                     <div class="row m-t-3 mb-3">
                         <div class="col-md-3">
@@ -64,7 +62,7 @@
                         </div>
                     </div>
                     <div class="col-lg-12 text-center mt-3 mb-3">
-                        <button class="btn btn-info btn-md" type="submit"> تحديث</button>
+                        <button class="btn btn-primary btn-md" type="submit"> تحديث</button>
                     </div>
                     {!! Form::close() !!}
                 </div>

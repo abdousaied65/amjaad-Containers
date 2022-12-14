@@ -77,14 +77,13 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card mg-b-20">
+                <div class="card-header bg-primary">
+                    <h5 class="text-white text-center">
+                        اضافة صلاحية جديدة
+                    </h5>
+                </div>
+
                 <div class="card-body">
-                    <div class="col-12">
-                        <h5 style="min-width: 300px;" class="pull-left alert alert-md alert-success">
-                            اضافة صلاحية جديدة
-                        </h5>
-                    </div>
-                    <div class="clearfix"></div>
-                    <br>
                     {!! Form::open(array('route' => 'supervisor.roles.store','method'=>'POST')) !!}
                     <input type="hidden" value="supervisor-web" name="guard_name"/>
                     <div class="main-content-label mg-b-5">
@@ -98,7 +97,7 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-condensed table-hover text-center">
+                        <table class="table table-bordered table-condensed mt-5 text-center">
                             <thead>
                             <tr>
                                 <th class="text-center"> #</th>
@@ -318,7 +317,7 @@
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-md-12 text-center">
                             <button type="button" id="check_all" class="btn btn-danger"> تحديد الكل</button>
-                            <button type="submit" class="btn btn-info">تأكيد واضافة</button>
+                            <button type="submit" class="btn btn-primary">تأكيد واضافة</button>
                         </div>
                     </div>
                     {!! Form::close() !!}

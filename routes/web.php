@@ -106,8 +106,10 @@ Route::group(
 
     Route::post('store-company-details', 'CompanyController@storeCon')->name('supervisor.companies.storeCon');
 
-    Route::post('get-container-details', 'ContainerController@getDetails')->name('containers.getDetails');
+    Route::post('get-container-details', 'BillController@getDetails')->name('containers.getDetails');
+    Route::post('get-container-details2', 'BillController@getDetails2')->name('containers.getDetails2');
     Route::post('get-bill-total', 'BillController@getTotal')->name('bill.total');
+    Route::post('get-bill-total2', 'BillController@getTotal2')->name('bill.total2');
 
     // safes Routes
     Route::resource('safes', 'SafeController')->names([
@@ -167,7 +169,10 @@ Route::group(
 
     Route::get('unexecuted-contracts-bills', 'UnexecutedBillController@contracts_bills')->name('unexecuted.contracts.bills');
     Route::post('get-unexecuted-bill-total', 'UnexecutedBillController@getTotal')->name('bill.unexecuted.total');
+    Route::post('get-unexecuted-bill-total2', 'UnexecutedBillController@getTotal2')->name('bill.unexecuted.total2');
     Route::post('get-unexecuted-container-details', 'UnexecutedBillController@getDetails')->name('unexecuted.containers.getDetails');
+    Route::post('get-unexecuted-container-details-2', 'UnexecutedBillController@getDetails2')
+        ->name('unexecuted.containers.getDetails2');
 
     Route::get('print-unexecuted-contract/{id?}', 'UnexecutedBillController@print_contract')->name('print.unexecuted.contract');
     Route::get('print-unexecuted-bill/{id?}', 'UnexecutedBillController@print_bill')->name('print.unexecuted.bill');

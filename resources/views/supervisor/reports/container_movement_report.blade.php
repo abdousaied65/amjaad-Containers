@@ -29,8 +29,8 @@
     <div class="row row-sm">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-header pb-0">
-                    <h5 class="alert alert-md alert-success">
+                <div class="card-header bg-primary pb-0">
+                    <h5 class="text-center text-white">
                         تقرير حركة الحاويات
                     </h5>
                 </div>
@@ -41,7 +41,7 @@
                         <div class="row m-t-3 mb-3">
                             <div class="col-md-4">
                                 <label> اختر الحاوية <span class="text-danger">*</span></label>
-                                <select required class="form-control w-100 js-example-basic-single"
+                                <select required class="form-control w-100 data-table"
                                         name="container_id" id="container_id">
                                     <option value="">اختر الحاوية</option>
                                     @foreach($containers as $container)
@@ -67,7 +67,7 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                            <button class="btn btn-info pd-x-20" type="submit">
+                            <button class="btn btn-primary pd-x-20" type="submit">
                                 عرض التقرير
                             </button>
                         </div>
@@ -98,15 +98,7 @@
                                             <td>{{ $container_k->measure }}</td>
                                             <td>{{ $container_k->rent_amount }}</td>
                                             <td>
-                                                @if($container_k->status == "مؤجرة")
-                                                    <span class="badge badge-info">
-                                                        مؤجرة
-                                                    </span>
-                                                @elseif($container_k->status == "فارغة")
-                                                    <span class="badge badge-success">
-                                                        فارغة
-                                                    </span>
-                                                @endif
+                                                {{$container_k->status}}
                                             </td>
                                         </tr>
                                         </tbody>
@@ -115,10 +107,10 @@
                                 <div class="col-lg-12 mt-5">
                                     <p class="alert alert-danger alert-md text-center"> عرض فواتير الحاوية </p>
                                 </div>
-                                <div class="table-responsive hoverable-table">
-                                    <table class="display w-100  text-nowrap table-bordered" id="example-table"
-                                           style="text-align: center;">
-                                        <thead>
+                                <div class="table-responsive table-hover">
+                        <table id="example-table"
+                               class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
+                            <thead>
                                         <tr>
                                             <th class="border-bottom-0 text-center">#</th>
                                             <th class="border-bottom-0 text-center">
@@ -300,7 +292,7 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                {{--                                <a class="btn btn-md btn-info" href="javascript:;" onclick="window.print();">--}}
+                                {{--                                <a class="btn btn-md btn-primary" href="javascript:;" onclick="window.print();">--}}
                                 {{--                                    <i class="fa fa-print"></i>--}}
                                 {{--                                    طباعة التقرير--}}
                                 {{--                                </a>--}}
@@ -319,8 +311,7 @@
                     <h6 class="modal-title w-100" style="font-family: 'Almarai'; ">
                         عرض تفاصيل العقد
                     </h6>
-                    <button aria-label="Close" class="close"
-                            data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+
                 </div>
                 <div class="modal-body view_contract_details">
 

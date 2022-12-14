@@ -126,45 +126,4 @@ class ContainerController extends Controller
             return Excel::download(new ContainersExportByEnd(), 'حاويات ينتهى ايجارها قريبا.xlsx');
         }
     }
-
-    public function getDetails(Request $request)
-    {
-        $containers_ids = $request->container_id;
-        foreach ($containers_ids as $containers_id) {
-            $container = Container::FindOrFail($containers_id);
-            $container_name = $container->name;
-            $container_amount = round($container->rent_amount, 2);
-            $container_tax = round((15 / 100 * $container->rent_amount), 2);
-            $container_total = round(($container_amount + $container_tax), 2);
-            echo
-                '
-            <div class="row mb-2">
-                <div class="col-md-3">
-                    <label class="d-block">
-                        رقم الحاوية
-                    </label>
-                    <input readonly class="form-control" type="text" dir="ltr" value="' . $container_name . '" />
-                </div>
-                <div class="col-md-3">
-                    <label class="d-block">
-                        المبلغ بدون الضريبة
-                    </label>
-                    <input readonly class="form-control" type="number" dir="ltr" value="' . $container_amount . '"/>
-                </div>
-                <div class="col-md-3">
-                    <label class="d-block">
-                        الضريبة
-                    </label>
-                    <input readonly class="form-control" dir="ltr" value="' . $container_tax . '" type="number"/>
-                </div>
-                <div class="col-md-3">
-                    <label class="d-block">
-                        الصافى مع الضريبة
-                    </label>
-                    <input readonly class="form-control" dir="ltr" value="' . $container_total . '" type="number"/>
-                </div>
-            </div>
-            ';
-        }
-    }
 }

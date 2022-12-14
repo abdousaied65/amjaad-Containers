@@ -19,16 +19,17 @@
     <div class="row row-sm">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-header pb-0">
-                    <h5 class="alert alert-md alert-success">
+                <div class="card-header bg-primary pb-0">
+                    <h5 class="text-center text-white p-1">
                         اضافة شركة جديدة
                     </h5>
                 </div>
+
                 <div class="card-body p-1 m-1">
                     <form action="{{route('supervisor.companies.store','test')}}" method="post"
                           enctype="multipart/form-data">
                         {{csrf_field()}}
-                        <div class="row m-t-3 mb-3">
+                        <div class="row mt-3 mb-3">
                             <div class="col-md-3">
                                 <label> اسم الشركة <span class="text-danger">*</span></label>
                                 <input class="form-control mg-b-20" name="company_name" required="" type="text">
@@ -46,7 +47,7 @@
                                 <input class="form-control mg-b-20" dir="ltr" name="mobile_number" type="number">
                             </div>
                         </div>
-                        <div class="row m-t-3 mb-3">
+                        <div class="row mt-3 mb-3">
                             <div class="col-md-3">
                                 <label> العنوان <span class="text-danger">*</span></label>
                                 <input class="form-control mg-b-20" name="address" type="text">
@@ -65,7 +66,7 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                            <button class="btn btn-info pd-x-20" type="submit">
+                            <button class="btn btn-primary pd-x-20" type="submit">
                                 اضافة
                             </button>
                         </div>

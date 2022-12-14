@@ -20,21 +20,20 @@
         <div class="col-xl-12">
             <div class="card">
                 @if (session('success'))
-                    <div class="alert alert-success  fade show">
-                        <button class="close" data-dismiss="alert" aria-label="Close">×</button>
+                    <div class="alert alert-md alert-success">
                         {{ session('success') }}
                     </div>
                 @endif
-                <div class="card-header pb-0">
-                    <h5 class="alert alert-md alert-success">
+                <div class="card-header pb-0 bg-primary">
+                    <h5 class="text-white text-center p-1">
                         اعدادات الموقع
                     </h5>
                 </div>
-                <div class="card-body p-1 m-1">
+                <div class="card-body p-3">
                     <form action="{{route('supervisor.settings.update')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
-                        <div class="row m-t-3 mb-3">
+                        <div class="row mt-2 mb-3">
                             <div class="col-md-4 pull-right">
                                 <label> اسم المؤسسة <span class="text-danger">*</span></label>
                                 <input type="text" value="{{$settings->company_name}}" class="form-control"
@@ -51,7 +50,7 @@
                             </div>
                         </div>
                         <div class="clearfix"></div>
-                        <div class="row m-t-3 mb-3">
+                        <div class="row mt-2 mb-3">
                             <div class="col-md-4 pull-right">
                                 <label> الرقم الضريبى <span class="text-danger">*</span></label>
                                 <input type="number" dir="ltr" value="{{$settings->tax_number}}" class="form-control"
@@ -70,7 +69,7 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                            <button class="btn btn-info pd-x-20" type="submit">تحديث</button>
+                            <button class="btn btn-primary pd-x-20" type="submit">تحديث</button>
                         </div>
                     </form>
                 </div>

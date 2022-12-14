@@ -38,10 +38,10 @@
                                     تقرير الحاويات المؤجرة
                                 </p>
                             </div>
-                            <div class="table-responsive hoverable-table">
-                                <table class="display w-100  text-nowrap table-bordered" id="example-table"
-                                       style="text-align: center;">
-                                    <thead>
+                            <div class="table-responsive table-hover">
+                        <table id="example-table"
+                               class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
+                            <thead>
                                     <tr>
                                         <th class="border-bottom-0 text-center">#</th>
                                         <th class="border-bottom-0 text-center">

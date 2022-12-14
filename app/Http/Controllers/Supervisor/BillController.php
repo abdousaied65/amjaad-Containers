@@ -32,12 +32,13 @@ class BillController extends Controller
     {
         $containers_ids = $request->container_id;
         $total_before_discount = 0 ;
+        $unit_price = $request->unit_price;
         foreach ($containers_ids as $containers_id) {
             $container = Container::FindOrFail($containers_id);
             $container_name = $container->name;
-            $container_amount = round($container->rent_amount, 2);
+            $container_amount = round($unit_price, 2);
             $total_before_discount = $total_before_discount + $container_amount;
-            $container_tax = round((15 / 100 * $container->rent_amount), 2);
+            $container_tax = round((15 / 100 * $unit_price), 2);
             $container_total = round(($container_amount + $container_tax), 2);
             $container->update([
                 'status' => 'مؤجرة'
@@ -84,8 +85,8 @@ class BillController extends Controller
             $bill_id = $data['bill_id'];
             $contract_id = $data['contract_id'];
             $container_id = $container->id;
-            $container_amount = round($container->rent_amount, 2);
-            $container_tax = round((15 / 100 * $container->rent_amount), 2);
+            $container_amount = round($unit_price, 2);
+            $container_tax = round((15 / 100 * $unit_price), 2);
             $container_total = round(($container_amount + $container_tax), 2);
 
             $bill_container = BillContainer::create([
@@ -143,10 +144,15 @@ class BillController extends Controller
     public function getTotal(Request $request){
         $containers_ids = $request->container_id;
         $total = 0;
-
+        $unit_price = $request->unit_price;
         foreach ($containers_ids as $containers_id) {
             $container = Container::FindOrFail($containers_id);
-            $container_amount = round($container->rent_amount, 2);
+            if (empty($unit_price)){
+                $container_amount = round($container->rent_amount, 2);
+            }
+            else{
+                $container_amount = round($unit_price, 2);
+            }
             $total = $total + $container_amount;
         }
 
@@ -260,6 +266,93 @@ class BillController extends Controller
         $settings = Setting::first();
         return view('supervisor.bill.print_both', compact('contract', 'bill', 'settings'));
     }
+
+    public function getDetails(Request $request)
+    {
+        $containers_ids = $request->container_id;
+        foreach ($containers_ids as $containers_id) {
+            $container = Container::FindOrFail($containers_id);
+            $container_name = $container->name;
+
+            $unit_price = round($container->rent_amount, 2);
+            $quantity = $request->count;
+            $quantity_price = round(($unit_price * $quantity), 2);
+            $tax_total = round((15 / 100 * $quantity_price), 2);
+            $final_total = round(($quantity_price + $tax_total), 1);
+        }
+        echo '
+        <div class="row mb-2">
+            <div class="col-md-2">
+                <label class="d-block">
+                    السعر المفرد
+                </label>
+                <input class="form-control" type="text" name="unit_price" id="unit_price" dir="ltr" value="' . $unit_price . '"/>
+            </div>
+
+            <div class="col-md-2">
+                <label class="d-block">
+                    الكمية
+                </label>
+                <input readonly class="form-control" type="number" id="quantity" dir="ltr" value="' . $quantity . '"/>
+            </div>
+
+            <div class="col-md-3">
+                <label class="d-block">
+                    الاجمالى بدون الضريبة
+                </label>
+                <input readonly class="form-control" id="quantity_price" type="number" dir="ltr" value="' . $quantity_price . '"/>
+            </div>
+
+            <div class="col-md-2">
+                <label class="d-block">
+                    الضريبة
+                </label>
+                <input readonly class="form-control" id="tax_total" type="number" dir="ltr" value="' . $tax_total . '"/>
+            </div>
+
+            <div class="col-md-3">
+                <label class="d-block">
+                    الاجمالى شامل الضريبة
+                </label>
+                <input readonly class="form-control" id="final_total" type="number" dir="ltr" value="' . $final_total . '"/>
+            </div>
+        </div>
+        ';
+
+        echo "
+        <script>
+        $('#unit_price').on('keyup', function () {
+
+            let containers_number = $('#containers_number').val();
+            let unit_price = $(this).val();
+            let discount_percent = $('#discount_percent').val();
+            let vat_percent = $('#vat_percent').val();
+
+            $.post('/supervisor/get-unexecuted-container-details-2', {
+                containers_number: containers_number,
+                unit_price:unit_price,
+                '_token': '" . csrf_token() . "',
+            }, function (data) {
+                $('#quantity_price').val(data.quantity_price);
+                $('#tax_total').val(data.tax_total);
+                $('#final_total').val(data.final_total);
+
+                $.post('/supervisor/get-unexecuted-bill-total2',{
+                    quantity_price: data.quantity_price,
+                    discount_percent: discount_percent,
+                    vat_percent: vat_percent,
+                    '_token': '" . csrf_token() . "'
+                }, function (data) {
+                    $('#total_amount').val(data.total_amount);
+                });
+            });
+        });
+        </script>
+        ";
+    }
+
+
+
 }
 
 

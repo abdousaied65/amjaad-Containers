@@ -19,8 +19,8 @@
     <div class="row row-sm">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-header pb-0">
-                    <h5 class="alert alert-md alert-success">
+                <div class="card-header bg-primary pb-0">
+                    <h5 class="text-white text-center p-1">
                         اضافة مشرف جديد
                     </h5>
                 </div>
@@ -44,8 +44,8 @@
                             </div>
                             <div class="parsley-input col-md-4 mg-t-20 mg-md-t-0" id="lnWrapper">
                                 <label class="form-label"> مجموعة المشرفين </label>
-                                <select data-live-search="true" data-style="btn-info" title="اختر مجموعة المشرفين"
-                                        class="form-control selectpicker" required name="role_name">
+                                <select class="form-control data-table w-100" required name="role_name">
+                                    <option value=""></option>
                                     @foreach($roles as $role)
                                         <option value="{{$role}}">{{$role}}</option>
                                     @endforeach
@@ -53,35 +53,33 @@
                             </div>
                         </div>
                         <div class="row m-t-3 mb-3">
-                            <div class="parsley-input col-md-4 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                <label> كلمة المرور : <span class="text-danger">*</span></label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text showPassword" id="basic-addon1">
-                                            <i class="fa fa-eye basic-addon1"></i>
-                                        </span>
+
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label class="form-label">
+                                    كلمة المرور
+                                </label>
+                                <fieldset class="form-icon-group left-icon position-relative">
+                                    <input required dir="ltr" type="password" name="password"
+                                           class="form-control ">
+                                    <div class="form-icon position-absolute">
+                                        <i class="fa fa-lock"></i>
                                     </div>
-                                    <input id="password" type="password"
-                                           class="form-control @error('password') is-invalid @enderror text-left"
-                                           dir="ltr" name="password" required
-                                           aria-describedby="basic-addon1">
-                                </div>
+                                </fieldset>
                             </div>
-                            <div class="parsley-input col-md-4 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                <label> تأكيد كلمة المرور : <span class="text-danger">*</span></label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text showPassword2"
-                                              id="basic-addon2">
-                                            <i class="fa fa-eye basic-addon2"></i>
-                                        </span>
+
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label class="form-label">
+                                    تأكيد كلمة المرور
+                                </label>
+                                <fieldset class="form-icon-group left-icon position-relative">
+                                    <input required dir="ltr" type="password" name="confirm-password"
+                                           class="form-control ">
+                                    <div class="form-icon position-absolute">
+                                        <i class="fa fa-lock"></i>
                                     </div>
-                                    <input id="confirm-password" type="password"
-                                           class="form-control @error('password') is-invalid @enderror text-left"
-                                           dir="ltr" name="confirm-password" required
-                                           aria-describedby="basic-addon2">
-                                </div>
+                                </fieldset>
                             </div>
+
                             <div class="col-lg-4 mb-2">
                                 <label for=""> الصورة الشخصية </label>
                                 <input accept="image/*" type="file"
@@ -94,32 +92,11 @@
 
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                            <button class="btn btn-info pd-x-20" type="submit">تأكيد</button>
+                            <button class="btn btn-primary pd-x-20" type="submit">تأكيد</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <script src="{{asset('admin-assets/js/jquery.min.js')}}"></script>
-    <script>
-        $(".showPassword").click(function () {
-            if ($("#password").attr("type") == "password") {
-                $("#password").attr("type", "text");
-                $(".showPassword").find('i.fa').toggleClass('fa-eye fa-eye-slash');
-            } else {
-                $("#password").attr("type", "password");
-                $(".showPassword").find('i.fa').toggleClass('fa-eye fa-eye-slash');
-            }
-        });
-        $(".showPassword2").click(function () {
-            if ($("#confirm-password").attr("type") == "password") {
-                $("#confirm-password").attr("type", "text");
-                $(".showPassword2").find('i.fa').toggleClass('fa-eye fa-eye-slash');
-            } else {
-                $("#confirm-password").attr("type", "password");
-                $(".showPassword2").find('i.fa').toggleClass('fa-eye fa-eye-slash');
-            }
-        });
-    </script>
 @endsection

@@ -1,52 +1,77 @@
 @extends('supervisor.layouts.master2')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="brand text-center">
-                <a class="link text-white text-center" href="{{route('index')}}">
-                    <img class="text-center" src="{{asset('admin-assets/img/logo.png')}}" style="width:20%; margin: 10px auto ;" />
-                </a>
-            </div>
-            <div class="card">
-                <div class="card-header text-center">اعادة تعيين كلمة المرور</div>
+    <!-- main body area -->
+    <div class="main auth-div p-2 py-3 p-xl-5">
+        <!-- Body: Body -->
+        <div class="body d-flex p-0 p-xl-5">
+            <div class="container-fluid">
+                <div class="row g-0">
+                    <div
+                        class="col-lg-12 d-flex justify-content-center align-items-center border-0 rounded-lg auth-h100">
+                        <div class="w-100 p-4 p-md-5 card border-0" style="max-width: 40rem;">
+                            <!-- Form -->
+                            <form action="{{ route('supervisor.password.email') }}" class="row g-1 p-0 p-md-4"
+                                  method="post">
+                                @csrf
+                                <div class="col-12 text-center mb-5">
+                                    <img src="{{asset('assets/img/logo.png')}}" class="w-25 mb-4" alt=""/>
+                                    <h1>
+                                        إعادة تعيين كلمة المرور
+                                    </h1>
+                                    <span>
+                                        أدخل البريد الالكترونى الذي استخدمته عند انضمامك وسنرسل لك تعليمات لإعادة تعيين كلمة المرور الخاصة بك.
+                                </span>
+                                </div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success text-center" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('supervisor.password.email') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">البريد الالكترونى </label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" dir="ltr" class="form-control text-left @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
+                                @if (session('message'))
+                                    <div class="alert alert-success text-center" role="alert">
+                                        {{ session('message') }}
+                                    </div>
+                                @endif
+                                <div class="col-12">
+                                    <div class="mb-2">
+                                        <label class="form-label">
+                                            البريد الالكترونى
+                                        </label>
+                                        <input dir="ltr" name="email" type="email"
+                                               class="form-control  @error('email') is-invalid @enderror"
+                                               autofocus autocomplete value="{{ old('email') }}" required
+                                               placeholder="abc@abc.com">
+                                        @error('email')
+                                        <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                @enderror
-                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 text-center mt-4">
+                                    <button type="submit" class="btn btn-md btn-block btn-dark lift text-uppercase">
+                                        اعادة تعيين كلمة المرور
+                                    </button>
+                                </div>
+                                <div class="col-12 text-center mt-4">
+                                <span class="text-muted"><a href="{{route('supervisor.login')}}">
+                                        العودة الى تسجيل الدخول
+                                    </a></span>
+                                </div>
+                            </form>
+                            <!-- End Form -->
                         </div>
+                    </div>
+                </div> <!-- End Row -->
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    ارسال رابط اعادة تعيين كلمةالمرور
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
+
+        <div class="animate_lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+
     </div>
-</div>
 @endsection

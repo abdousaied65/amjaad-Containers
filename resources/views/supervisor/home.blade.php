@@ -76,7 +76,7 @@
                         @foreach($empty_containers as $container)
                             <div class="col-lg-2 pull-right d-inline mt-3">
                                 <a href="{{route('create.contract.bill',$container->id)}}">
-                                    <button class="btn btn-info btn-md" type="button">
+                                    <button class="btn btn-primary btn-md" type="button">
                                         {{$container->name}}
                                     </button>
                                 </a>
@@ -100,8 +100,7 @@
                     <h6 class="modal-title w-100" style="font-family: 'Almarai'; ">
                         عرض بيانات ايجار الحاوية
                     </h6>
-                    <button aria-label="Close" class="close"
-                            data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+
                 </div>
                 <div class="modal-body container_details">
 

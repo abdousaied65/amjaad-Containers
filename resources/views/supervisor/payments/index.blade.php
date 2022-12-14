@@ -13,14 +13,13 @@
         text-align: center !important;
     }
 
-    table tr td {
-        padding: 10px !important;
+    table tbody tr td {
+        padding: 20px !important;
     }
 </style>
 @section('content')
     @if (session('success'))
-        <div class="alert alert-success  fade show">
-            <button class="close" data-dismiss="alert" aria-label="Close">×</button>
+        <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
@@ -28,45 +27,46 @@
     <div class="row row-sm">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-header pb-0">
-                    <div class="col-lg-12 margin-tb">
-                        <h5 style="min-width: 300px;" class="pull-right alert alert-md alert-success">
-                            عرض كل المدفوعات
-                        </h5>
-                    </div>
-                    <div class="clearfix"></div>
+                <div class="card-header bg-primary pb-0">
+                    <h5 class="p-1 text-center text-white">
+                        عرض كل المدفوعات
+                    </h5>
                 </div>
-                <div class="row mt-1 mb-1 text-center justify-content-center align-content-center">
-                    <form method="GET" action="{{route('print.selected.payments')}}">
-                        <button type="submit" class="btn btn-md btn-warning m-1 print_selected">
+                <div class="row mt-3 mb-1 text-center justify-content-center align-content-center">
+                    <form class="col-4" method="GET" action="{{route('print.selected.payments')}}">
+                        <button type="submit" class="btn btn-md btn-light-warning m-1 print_selected">
                             <i class="fa fa-print"></i>
                             طباعة
                         </button>
                     </form>
-                    <form method="POST" action="{{route('export.payments.excel')}}">
+                    <form class="col-4" method="POST" action="{{route('export.payments.excel')}}">
                         @csrf
                         @method('POST')
-                        <button type="submit" class="btn btn-md btn-success m-1">
+                        <button type="submit" class="btn btn-md btn-light-success m-1">
                             <i class="fa fa-file-excel-o"></i>
                             تصدير الكل EXCEL
                         </button>
                     </form>
-                    <a href="{{route('supervisor.payments.create')}}" role="button" class="btn btn-md btn-info m-1">
-                        <i class="fa fa-plus"></i>
-                        اضافة
-                    </a>
+                    <div class="col-4">
+                        <a href="{{route('supervisor.payments.create')}}" role="button"
+                           class="btn btn-md btn-light-info">
+                            <i class="fa fa-plus"></i>
+                            اضافة
+                        </a>
+                    </div>
                 </div>
+
                 <div class="card-body p-1 m-1">
-                    <div class="table-responsive hoverable-table">
-                        <table class="display w-100  text-nowrap table-bordered" id="example-table"
-                               style="text-align: center;">
+                    <div class="table-responsive table-hover">
+                        <table id="example-table"
+                               class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
                             <thead>
                             <tr>
                                 <th class="border-bottom-0 text-center">#</th>
                                 <th class="border-bottom-0 text-center"> الشركة</th>
                                 <th class="border-bottom-0 text-center"> الخزنة</th>
                                 <th class="border-bottom-0 text-center"> المبلغ</th>
-                                <th class="border-bottom-0 text-center"> تاريخ الدفع </th>
+                                <th class="border-bottom-0 text-center"> تاريخ الدفع</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -125,7 +125,7 @@
             initComplete: function () {
                 this.api().columns().every(function () {
                     var that = this;
-                    $('input[type="text"]', this.footer()).on('keyup change clear', function () {
+                    $('input[type="text"],input[type="number"],input[type="date"]', this.footer()).on('keyup change clear', function () {
                         if (that.search() !== this.value) {
                             that.search(this.value).draw();
                         }

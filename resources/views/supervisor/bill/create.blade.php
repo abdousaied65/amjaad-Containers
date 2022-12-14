@@ -19,8 +19,7 @@
     @endif
 
     @if (session('success'))
-        <div class="alert alert-success  fade show">
-            <button class="close" data-dismiss="alert" aria-label="Close">×</button>
+        <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
@@ -29,8 +28,8 @@
     <div class="row row-sm">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-header pb-0">
-                    <h5 class="alert alert-md alert-success text-center">
+                <div class="card-header bg-primary pb-0">
+                    <h5 class="p-1 text-white text-center">
                         اضافة عقد + فاتورة جديدة
                     </h5>
                 </div>
@@ -54,7 +53,6 @@
 
                                 <select required class="form-control selectpicker show-tick"
                                         data-live-search="true" data-title="اختر الشركة"
-                                        data-style="btn-secondary"
                                         name="company_id" id="company_id">
                                     @foreach($companies as $company)
                                         <option value="{{$company->id}}">{{$company->company_name}}</option>
@@ -73,7 +71,7 @@
                                 <label class="d-block">
                                     عدد الحاويات
                                 </label>
-                                <select required class="form-control w-100 js-example-basic-single"
+                                <select required class="form-control w-100 data-table"
                                         name="containers_number" id="containers_number">
                                     <option value="">اختر عدد الحاويات</option>
                                     @for($i=1; $i<=10;$i++)
@@ -91,7 +89,6 @@
                                 </label>
                                 <select multiple required class="form-control selectpicker show-tick"
                                         data-live-search="true" data-title="اختر الحاويات"
-                                        data-style="btn-primary"
                                         name="container_id[]" id="container_id">
                                     @foreach($containers as $container)
                                         <option
@@ -117,36 +114,50 @@
                         <div class="details">
                             <?php
                             if (isset($container_k)) {
+
                                 $container_name = $container_k->name;
-                                $container_amount = round($container_k->rent_amount, 2);
-                                $container_tax = round((15 / 100 * $container_k->rent_amount), 2);
-                                $container_total = round(($container_amount + $container_tax), 2);
+                                $unit_price = round($container_k->rent_amount, 2);
+                                $quantity = 1;
+                                $quantity_price = round(($unit_price * $quantity), 2);
+                                $tax_total = round((15 / 100 * $quantity_price), 2);
+                                $final_total = round(($quantity_price + $tax_total), 1);
+
                                 echo
                                     '
                                 <div class="row mb-2">
+                                    <div class="col-md-2">
+                                        <label class="d-block">
+                                            السعر المفرد
+                                        </label>
+                                        <input class="form-control" type="text" name="unit_price" id="unit_price" dir="ltr" value="' . $unit_price . '"/>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label class="d-block">
+                                            الكمية
+                                        </label>
+                                        <input readonly class="form-control" type="number" id="quantity" dir="ltr" value="' . $quantity . '"/>
+                                    </div>
+
                                     <div class="col-md-3">
                                         <label class="d-block">
-                                            رقم الحاوية
+                                            الاجمالى بدون الضريبة
                                         </label>
-                                        <input readonly class="form-control" type="text" dir="ltr" value="' . $container_name . '" />
+                                        <input readonly class="form-control" id="quantity_price" type="number" dir="ltr" value="' . $quantity_price . '"/>
                                     </div>
-                                    <div class="col-md-3">
-                                        <label class="d-block">
-                                            المبلغ بدون الضريبة
-                                        </label>
-                                        <input readonly class="form-control" type="number" dir="ltr" value="' . $container_amount . '"/>
-                                    </div>
-                                    <div class="col-md-3">
+
+                                    <div class="col-md-2">
                                         <label class="d-block">
                                             الضريبة
                                         </label>
-                                        <input readonly class="form-control" dir="ltr" value="' . $container_tax . '" type="number"/>
+                                        <input readonly class="form-control" id="tax_total" type="number" dir="ltr" value="' . $tax_total . '"/>
                                     </div>
+
                                     <div class="col-md-3">
                                         <label class="d-block">
-                                            الصافى مع الضريبة
+                                            الاجمالى شامل الضريبة
                                         </label>
-                                        <input readonly class="form-control" dir="ltr" value="' . $container_total . '" type="number"/>
+                                        <input readonly class="form-control" id="final_total" type="number" dir="ltr" value="' . $final_total . '"/>
                                     </div>
                                 </div>
                                 ';
@@ -261,6 +272,12 @@
                                            id="vat_percent"/>
                                 </div>
                             </div>
+                            <div class="col-lg-4">
+                                <label class="d-block mt-4 text-danger font-weight-bold">
+                                    * تطبق نسبة الخصم أولا على المبلغ الاجمالى الاساسى ثم تطبق الضريبة على المبلغ بعد الخصم
+                                </label>
+                            </div>
+
                         </div>
 
                         <h5 class="mt-4 mb-4">
@@ -289,7 +306,7 @@
                                     $final_total = $total_after_discount + $vat_total;
                                     $final_total = round($final_total, 2);
                                     echo '
-                                    <input type="number" required min="0" value="'.$final_total.'" class="form-control" dir="ltr"
+                                    <input type="number" required min="0" value="' . $final_total . '" class="form-control" dir="ltr"
                                        name="total_amount" id="total_amount"/>
                                     ';
                                 } else {
@@ -312,7 +329,7 @@
                                 <label for="safe_id" class="d-block">
                                     اختر الخزنة
                                 </label>
-                                <select required class="form-control w-100 js-example-basic-single"
+                                <select required class="form-control w-100 data-table"
                                         name="safe_id" id="safe_id">
                                     <option value="">اختر الخزنة</option>
                                     @foreach($safes as $safe)
@@ -341,8 +358,7 @@
             <div class="modal-content modal-content-demo">
                 <div class="modal-header text-center">
                     <h6 class="modal-title w-100" style="font-family: 'Almarai'; ">اضافة شركة جديدة</h6>
-                    <button aria-label="Close" class="close"
-                            data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+
                 </div>
                 <div class="modal-body">
                     <div class="row m-t-3 mb-3">
@@ -400,31 +416,40 @@
     <script src="{{asset('admin-assets/js/jquery.min.js')}}"></script>
     <script>
         $('#container_id').on('change', function () {
-            let container_id = $(this).val();
-            let discount_percent = $('#discount_percent').val();
-            let vat_percent = $('#vat_percent').val();
-            $.post("{{route('containers.getDetails')}}", {
-                container_id: container_id,
-                "_token": "{{ csrf_token() }}"
-            }, function (data) {
-                $('.details').html(data);
-                $.post("{{route('bill.total')}}", {
+            let count = $('#container_id > option:selected').length;
+            let max = $('#containers_number').val();
+            if (count <= max) {
+                let container_id = $(this).val();
+                let discount_percent = $('#discount_percent').val();
+                let vat_percent = $('#vat_percent').val();
+                $.post("{{route('containers.getDetails')}}", {
                     container_id: container_id,
-                    discount_percent: discount_percent,
-                    vat_percent: vat_percent,
+                    count: count,
                     "_token": "{{ csrf_token() }}"
                 }, function (data) {
-                    $('#total_amount').val(data.total_amount);
+                    $('.details').html(data);
+                    $.post("{{route('bill.total')}}", {
+                        container_id: container_id,
+                        discount_percent: discount_percent,
+                        vat_percent: vat_percent,
+                        "_token": "{{ csrf_token() }}"
+                    }, function (data) {
+                        $('#total_amount').val(data.total_amount);
+                    });
                 });
-            });
+            } else {
+                alert("عدد الحاويات المثبت فى الفاتورة " + " " + max);
+            }
         });
 
         $('#discount_percent , #vat_percent').on('change keyup blur', function () {
             let container_id = $('#container_id').val();
+            let unit_price = $('#unit_price').val();
             let discount_percent = $('#discount_percent').val();
             let vat_percent = $('#vat_percent').val();
             $.post("{{route('bill.total')}}", {
                 container_id: container_id,
+                unit_price: unit_price,
                 discount_percent: discount_percent,
                 vat_percent: vat_percent,
                 "_token": "{{ csrf_token() }}"

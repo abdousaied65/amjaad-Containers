@@ -18,8 +18,7 @@
 </style>
 @section('content')
     @if (session('success'))
-        <div class="alert alert-success  fade show">
-            <button class="close" data-dismiss="alert" aria-label="Close">×</button>
+        <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
@@ -34,17 +33,14 @@
         <div class="col-xl-12">
 
             <div class="card">
-                <div class="card-header pb-0">
-                    <div class="col-lg-12 margin-tb">
-                        <h5 style="min-width: 300px;" class="text-center alert alert-md alert-success">
-                            البحث فى العقود غير المنفذة
-                        </h5>
-                    </div>
-                    <div class="clearfix"></div>
+                <div class="card-header bg-primary pb-0">
+                    <h5 class="text-center text-white p-1">
+                        البحث فى العقود غير المنفذة
+                    </h5>
                 </div>
                 <div class="card-body p-2 mt-3 mb-3">
                     <div class="col-lg-12">
-                        <div class="col-lg-4 d-inline float-right pull-right">
+                        <div class="col-lg-4 p-3 d-inline float-right pull-right">
                             <form action="{{route('search.unexecuted.by.company')}}" method="post">
                                 @csrf
                                 @method('POST')
@@ -53,7 +49,6 @@
                                 </label>
                                 <select required class="form-control selectpicker show-tick"
                                         data-live-search="true" data-title="اختر الشركة"
-                                        data-style="btn-secondary"
                                         name="company_id" id="company_id">
                                     @foreach($companies as $company)
                                         <option
@@ -70,7 +65,7 @@
                                 </button>
                             </form>
                         </div>
-                        <div class="col-lg-4 col-lg-4 d-inline float-right pull-right">
+                        <div class="col-lg-4 col-lg-4 p-3 d-inline float-right pull-right">
                             <form action="{{route('search.unexecuted.by.phone')}}" method="post">
                                 @csrf
                                 @method('POST')
@@ -88,7 +83,7 @@
                                 </button>
                             </form>
                         </div>
-                        <div class="col-lg-4 col-lg-4 d-inline float-right pull-right">
+                        <div class="col-lg-4 col-lg-4 p-3 d-inline float-right pull-right">
                             <form action="{{route('search.unexecuted.by.bill')}}" method="post">
                                 @csrf
                                 @method('POST')
@@ -113,7 +108,7 @@
             <div class="card">
                 <div class="card-header pb-0">
                     <div class="col-lg-12 margin-tb">
-                        <h5 style="min-width: 300px;" class="text-center alert alert-md alert-success">
+                        <h5 class="text-center text-white bg-primary p-2 w-100">
                             عرض كل العقود والفواتير
                             الغير منفذة
                         </h5>
@@ -121,9 +116,9 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="card-body p-1 m-1">
-                    <div class="table-responsive hoverable-table">
-                        <table class="display w-100  text-nowrap table-bordered" id="example-table"
-                               style="text-align: center;">
+                    <div class="table-responsive table-hover">
+                        <table id="example-table"
+                               class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
                             <thead>
                             <tr>
                                 <th class="border-bottom-0 text-center">#</th>
@@ -205,17 +200,11 @@
                                     <td>{{$bill->time}}</td>
                                     <td>
                                         @if($bill->payment_status == "unpaid")
-                                            <span class="badge badge-danger pd-10">
-                                                غير مدفوعة
-                                            </span>
+                                            غير مدفوعة
                                         @elseif($bill->payment_status == "totally paid")
-                                            <span class="badge badge-success pd-10">
-                                                 مدفوعة بالكامل
-                                            </span>
+                                            مدفوعة بالكامل
                                         @elseif($bill->payment_status == "partially paid")
-                                            <span class="badge badge-info pd-10">
-                                                 مدفوعة جزئيا
-                                            </span>
+                                            مدفوعة جزئيا
                                         @endif
                                     </td>
                                     <td>{{$bill->discount_total}}</td>
@@ -240,7 +229,7 @@
                                             <div class="dropdown-menu">
                                                 <a
                                                     data-toggle="modal" bill_id="{{$bill->id}}"
-                                                    href="#modaldemo9"
+                                                    href="#modaldemo9" count="{{$bill->contract->containers_number}}"
                                                     class="dropdown-item delivery">
                                                     <i class="fa fa-truck"></i>
                                                     تسليم الحاويات للعميل
@@ -283,8 +272,7 @@
                     <h6 class="modal-title w-100" style="font-family: 'Almarai'; ">
                         عرض تفاصيل العقد الغير منفذ
                     </h6>
-                    <button aria-label="Close" class="close"
-                            data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+
                 </div>
                 <div class="modal-body view_contract_details">
 
@@ -303,8 +291,7 @@
                     <h6 class="modal-title w-100" style="font-family: 'Almarai'; ">
                         تسليم الحاويات للعميل
                     </h6>
-                    <button aria-label="Close" class="close"
-                            data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+
                 </div>
                 <form action="{{route('save.unexecuted')}}" method="post">
                     @csrf
@@ -318,7 +305,7 @@
                                 </label>
                                 <select multiple required class="form-control selectpicker show-tick"
                                         data-live-search="true" data-title="اختر الحاويات"
-                                        data-style="btn-primary"
+                                        data-max=""
                                         name="container_id[]" id="container_id">
                                     @foreach($containers as $container)
                                         <option
@@ -351,18 +338,27 @@
 <script>
     $(document).ready(function () {
         $('#container_id').on('change', function () {
+            let count = $('#container_id > option:selected').length;
+            let max = $(this).prop('data-max');
             let container_id = $(this).val();
-            $.post("{{route('getDetails')}}", {
-                container_id: container_id,
-                "_token": "{{ csrf_token() }}"
-            }, function (data) {
-                $('.details').html(data);
-            });
+            if (count <= max) {
+                $.post("{{route('getDetails')}}", {
+                    container_id: container_id,
+                    "_token": "{{ csrf_token() }}"
+                }, function (data) {
+                    $('.details').html(data);
+                });
+            }
+            else{
+                alert("عدد الحاويات المثبت فى الفاتورة " +" "+ max);
+            }
         });
 
         $('.delivery').on('click', function () {
             let bill_id = $(this).attr('bill_id');
+            let count = $(this).attr('count');
             $('#bill_id').val(bill_id);
+            $('#container_id').prop('data-max', count);
         });
 
         $('.view_contract').on('click', function () {

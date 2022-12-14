@@ -89,7 +89,7 @@
                         {{$settings->tax_number}}
                     </td>
                     <td class="text-center" style="width: 40%!important;">
-                        <img src="{{asset('admin-assets/img/logo.png')}}" style="width: 100px; height: 100px;" alt="">
+                        <img src="{{asset('assets/img/logo.png')}}" style="width: 100px; height: 100px;" alt="">
                         <br>
                         <h1>
                             اتفاقية تأجير حاوية ونقل مخلفات
@@ -159,7 +159,7 @@
                             <td style="width:15%;">اسم العميل</td>
                             <td style="width:35%;">{{$bill->company->company_name}}</td>
                             <td style="width:15%;"> ينوب عنها</td>
-                            <td style="width:35%;" colspan="3">{{$bill->company->company_owner}}</td>
+                            <td style="width:35%;" colspan="3">{{$bill->company->company_name}}</td>
                         </tr>
                         <tr>
                             <td style="width:15%;">رقم التليفون</td>
@@ -177,7 +177,7 @@
                 </div>
             </div>
             <?php
-            echo '<h6 class="alert alert-sm alert-info text-center">
+            echo '<h6 class="alert alert-sm alert-primary text-center">
                         <i class="fa fa-info-circle"></i>
                     بيانات عناصر الفاتورة  رقم
                         ' . $bill->id . '
@@ -198,10 +198,9 @@
             echo "<td>" . ++$i . "</td>";
             echo "<td> حاوية </td>";
             echo "<td> ".$bill->contract->containers_number." </td>";
-            echo "<td>" . $container->rent_amount . "</td>";
-            echo "<td>" . $container->rent_amount * $bill->contract->containers_number . "</td>";
+            echo "<td>" . $bill->unit_price . "</td>";
+            echo "<td>" . round(($bill->unit_price * $bill->contract->containers_number),2) . "</td>";
             echo "</tr>";
-
 
             echo "</tbody>";
             echo "</table>";

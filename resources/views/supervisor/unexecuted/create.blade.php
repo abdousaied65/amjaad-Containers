@@ -1,5 +1,6 @@
 @extends('supervisor.layouts.master')
 <link rel="stylesheet" href="{{asset('admin-assets/css/bootstrap.min.css')}}">
+
 <style>
     .bootstrap-select {
         width: 80% !important;
@@ -19,8 +20,7 @@
     @endif
 
     @if (session('success'))
-        <div class="alert alert-success  fade show">
-            <button class="close" data-dismiss="alert" aria-label="Close">×</button>
+        <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
@@ -29,8 +29,8 @@
     <div class="row row-sm">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-header pb-0">
-                    <h5 class="alert alert-md alert-success text-center">
+                <div class="card-header bg-primary pb-0">
+                    <h5 class="text-white p-1 text-center">
                         اضافة عقد غير منفذ
                     </h5>
                 </div>
@@ -54,7 +54,7 @@
 
                                 <select required class="form-control selectpicker show-tick"
                                         data-live-search="true" data-title="اختر الشركة"
-                                        data-style="btn-secondary"
+                                        data-style="btn-default"
                                         name="company_id" id="company_id">
                                     @foreach($companies as $company)
                                         <option value="{{$company->id}}">{{$company->company_name}}</option>
@@ -73,10 +73,10 @@
                                 <label class="d-block">
                                     عدد الحاويات
                                 </label>
-        
+
                                 <input min="1" class="form-control" type="number" dir="ltr"
-                                       name="containers_number" id="containers_number" />
-                                
+                                       name="containers_number" id="containers_number"/>
+
                             </div>
 
                             <div class="col-md-4">
@@ -182,25 +182,32 @@
                                 <label for="discount_percent" class="d-block">
                                     نسبة الخصم
                                 </label>
-                                <div class="input-group" dir="ltr">
-                                    <span class="input-group-addon"
-                                          style="font-size: 18px;font-weight: bold;">%</span>
-                                    <input required type="number" class="form-control input-spec"
+
+                                <div class="input-group mb-3" dir="ltr">
+                                    <span class="input-group-text" id="basic-addon1">%</span>
+                                    <input required type="number" class="form-control" placeholder="Username"
                                            name="discount_percent" value="0"
-                                           id="discount_percent"/>
+                                           id="discount_percent"
+                                           aria-label="Username" aria-describedby="basic-addon1">
                                 </div>
+
                             </div>
                             <div class="col-lg-4">
                                 <label for="vat_percent" class="d-block">
                                     ضريبة القيمة المضافة
                                 </label>
-                                <div class="input-group" dir="ltr">
-                                    <span class="input-group-addon"
-                                          style="font-size: 18px;font-weight: bold;">%</span>
-                                    <input required type="number" class="form-control input-spec"
+                                <div class="input-group mb-3" dir="ltr">
+                                    <span class="input-group-text" id="basic-addon1">%</span>
+                                    <input required type="number" class="form-control" placeholder="Username"
                                            name="vat_percent" value="15"
-                                           id="vat_percent"/>
+                                           id="vat_percent"
+                                           aria-label="Username" aria-describedby="basic-addon1">
                                 </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="d-block mt-4 text-danger font-weight-bold">
+                                    * تطبق نسبة الخصم أولا على المبلغ الاجمالى الاساسى ثم تطبق الضريبة على المبلغ بعد الخصم
+                                </label>
                             </div>
                         </div>
 
@@ -229,7 +236,7 @@
                                 <label for="safe_id" class="d-block">
                                     اختر الخزنة
                                 </label>
-                                <select required class="form-control w-100 js-example-basic-single"
+                                <select required class="form-control w-100 data-table"
                                         name="safe_id" id="safe_id">
                                     <option value="">اختر الخزنة</option>
                                     @foreach($safes as $safe)
@@ -258,8 +265,7 @@
             <div class="modal-content modal-content-demo">
                 <div class="modal-header text-center">
                     <h6 class="modal-title w-100" style="font-family: 'Almarai'; ">اضافة شركة جديدة</h6>
-                    <button aria-label="Close" class="close"
-                            data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+
                 </div>
                 <div class="modal-body">
                     <div class="row m-t-3 mb-3">
@@ -313,10 +319,11 @@
             </div>
         </div>
     </div>
-
-    <script src="{{asset('admin-assets/js/jquery.min.js')}}"></script>
-    <script>
-        $('#containers_number').on('keyup blur change', function () {
+@endsection
+<script src="{{asset('admin-assets/js/jquery.min.js')}}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#containers_number').on('keyup', function () {
 
             let containers_number = $(this).val();
             let discount_percent = $('#discount_percent').val();
@@ -338,20 +345,22 @@
             });
         });
 
-        $('#discount_percent , #vat_percent').on('change keyup blur', function () {
+        $('#discount_percent , #vat_percent').on('keyup', function () {
             let containers_number = $('#containers_number').val();
             let discount_percent = $('#discount_percent').val();
             let vat_percent = $('#vat_percent').val();
+            let unit_price = $('#unit_price').val();
+
             $.post("{{route('bill.unexecuted.total')}}", {
                 containers_number: containers_number,
                 discount_percent: discount_percent,
+                unit_price:unit_price,
                 vat_percent: vat_percent,
                 "_token": "{{ csrf_token() }}"
             }, function (data) {
                 $('#total_amount').val(data.total_amount);
             });
         });
-
         $('.add_company').on('click', function () {
             let company_name = $('#company_name').val();
             let company_owner = $('#company_owner').val();
@@ -392,5 +401,7 @@
                 });
             }
         });
-    </script>
-@endsection
+    });
+</script>
+
+

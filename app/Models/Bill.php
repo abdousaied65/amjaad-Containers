@@ -12,7 +12,7 @@ class Bill extends Model
     protected $fillable = [
         'supervisor_id', 'contract_id','type', 'company_id', 'date', 'time', 'notes', 'status',
         'payment_status', 'discount_percent', 'discount_total', 'total_before_discount', 'total_after_discount',
-        'vat_total', 'final_total', 'paid', 'rest',
+        'vat_total', 'final_total', 'paid', 'rest','unit_price'
     ];
 
     public function supervisor()

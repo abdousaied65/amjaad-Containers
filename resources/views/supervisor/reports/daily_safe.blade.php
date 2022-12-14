@@ -14,7 +14,11 @@
     .box{
         width: 100%;
         height: auto;
-        border: 1p
+        padding-top: 30px!important;
+        border: 1px solid #ddd;
+    }
+    h5{
+        font-size: 16px!important;
     }
 </style>
 @section('content')
@@ -34,51 +38,50 @@
     <div class="row row-sm">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-header pb-0">
-                    <h5 class="alert alert-md alert-dark text-center">
+                <div class="card-header bg-primary pb-0">
+                    <h5 class="text-white p-1 text-center">
                         اغلاق يومية الصندوق
                     </h5>
                 </div>
                 <div class="card-body p-2 m-1">
                     <div class="row mt-3 mb-3 text-center">
-                        <div class="alert alert-danger alert-sm col-lg-4">
+                        <div class="col-lg-4 box">
                             <h5>
                                 عدد العقود المنفذة
                             </h5>
-                            <p>
+                            <h6>
                                 {{$executed_bills->count()}}
-                            </p>
+                            </h6>
                         </div>
-                        <div class="alert alert-success alert-sm col-lg-4">
+                        <div class="col-lg-4 box">
                             <h5>
                                 عدد العقود غير المنفذة
                             </h5>
-                            <p>
+                            <h6>
                                 {{$unexecuted_bills->count()}}
-                            </p>
+                            </h6>
                         </div>
-
-                        <div class="alert alert-primary alert-sm col-lg-4">
+                        <div class="col-lg-4 box">
                             <h5>
                                 عدد الحاويات التي تم تسليمها - استلامها
                             </h5>
-                            <p>
+                            <h6>
                                 {{$bill_containers->count()}}
-                            </p>
+                            </h6>
                         </div>
                     </div>
                 </div>
 
                 <div class="card-body p-2 m-1">
-                    <h3 class="alert alert-md alert-danger text-center">
+                    <h6 class="alert alert-md alert-danger text-center">
                         المبالغ المقبوضة ضمن اليوم
                         [
                         {{$amounts}}
                         ]
-                    </h3>
-                    <div class="table-responsive hoverable-table">
-                        <table class="display w-100  text-nowrap table-bordered" id="example-table"
-                               style="text-align: center;">
+                    </h6>
+                    <div class="table-responsive table-hover">
+                        <table id="example-table"
+                               class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
                             <thead>
                             <tr>
                                 <th class="border-bottom-0 text-center">#</th>

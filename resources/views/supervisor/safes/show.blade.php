@@ -13,7 +13,7 @@
 @section('content')
     <div class="row text-center">
         <div class="col-lg-12 mt-5">
-            <p class="alert alert-info alert-md text-center"> عرض بيانات الخزنة </p>
+            <p class="alert alert-primary alert-md text-center"> عرض بيانات الخزنة </p>
         </div>
         <div class="table-responsive hoverable-table">
             <table class="table table-striped table-condensed table-bordered text-center">

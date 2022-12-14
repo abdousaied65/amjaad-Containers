@@ -17,14 +17,14 @@
         width: 20px;
         height: 20px;
     }
-    span.badge{
-        padding: 10px!important;
+
+    span.badge {
+        padding: 10px !important;
     }
 </style>
 @section('content')
     @if (session('success'))
-        <div class="alert alert-success  fade show">
-            <button class="close" data-dismiss="alert" aria-label="Close">×</button>
+        <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
@@ -38,66 +38,69 @@
     <div class="row row-sm">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-header pb-0">
+                <div class="card-header bg-primary pb-0">
                     <div class="col-lg-12 margin-tb">
-                        <h5 style="min-width: 300px;" class="pull-right alert alert-md alert-success">
+                        <h5 class="text-center p-1 text-white">
                             عرض كل الحاويات
                         </h5>
                     </div>
-                    <div class="clearfix"></div>
                 </div>
                 <div class="row mt-1 mb-1 text-center justify-content-center align-content-center">
-                    <form method="GET" action="{{route('print.selected.containers')}}">
-                        <button type="submit" class="btn btn-md btn-warning m-1 print_selected">
+                    <form class="col-6" method="GET" action="{{route('print.selected.containers')}}">
+                        <button type="submit" class="btn btn-md btn-light-warning m-1 print_selected">
                             <i class="fa fa-print"></i>
                             طباعة
                         </button>
                     </form>
-                    <form method="POST" action="{{route('export.containers.excel')}}">
+                    <form class="col-6" method="POST" action="{{route('export.containers.excel')}}">
                         @csrf
                         @method('POST')
-                        <button type="submit" class="btn btn-md btn-success m-1">
+                        <button type="submit" class="btn btn-md btn-light-success m-1">
                             <i class="fa fa-file-excel-o"></i>
                             تصدير الكل EXCEL
                         </button>
                     </form>
 
-                    <form method="POST" class="" id="myForm" action="{{route('remove.selected.containers')}}">
+                    <form class="col-6" method="POST" id="myForm"
+                          action="{{route('remove.selected.containers')}}">
                         @csrf
                         @method('POST')
-                        <button type="submit" class="btn btn-md btn-danger m-1 remove_selected">
+                        <button type="submit" class="btn btn-md btn-light-danger m-1 remove_selected">
                             <i class="fa fa-trash"></i>
                             حذف
                         </button>
                     </form>
-
-                    <a href="{{route('supervisor.containers.create')}}" role="button" class="btn btn-md btn-info m-1">
-                        <i class="fa fa-plus"></i>
-                        اضافة
-                    </a>
+                    <div class="col-6">
+                        <a href="{{route('supervisor.containers.create')}}" role="button"
+                           class="btn btn-md btn-light-info">
+                            <i class="fa fa-plus"></i>
+                            اضافة
+                        </a>
+                    </div>
                 </div>
 
                 <div class="row p-3">
-                    <form method="POST" class="col-lg-4 pull-right d-inline"
+                    <form method="POST" class="col-lg-6 pull-right d-inline"
                           action="{{route('export.containers.by.status.excel')}}">
                         @csrf
                         @method('POST')
-                        <div class="form-group pull-right d-inline">
-                            <label for="statuses" class="d-block">اختر الحالات للتصدير</label>
-                            <select required name="statuses[]" multiple data-live-search="true"
-                                    data-style="btn-warning" data-actions-box="true"
-                                    data-title="اختر الحالات" id="statuses" class="selectpicker show-tick">
-                                <option value="فارغة">فارغة</option>
-                                <option value="مؤجرة">مؤجرة</option>
-                            </select>
+                        <div class="row">
+                            <div class="form-group w-75">
+                                <label for="statuses" class="d-block">اختر الحالة للتصدير</label>
+                                <select required name="statuses[]" id="statuses" class="data-table w-100">
+                                    <option value="فارغة">فارغة</option>
+                                    <option value="مؤجرة">مؤجرة</option>
+                                </select>
+                            </div>
+                            <button style="font-size: 10px!important;margin-top: 32px!important;" type="submit"
+                                    class="btn btn-md btn-primary w-25">
+                                <i class="fa fa-file-excel-o"></i>
+                                تصدير
+                            </button>
                         </div>
-                        <button style="font-size: 10px!important;" type="submit"
-                                class="btn btn-md btn-warning pull-right d-inline">
-                            <i class="fa fa-file-excel-o"></i>
-                            تصدير بالحالة EXCEL
-                        </button>
+
                     </form>
-                    <form method="POST" class="col-lg-4 pull-right d-inline"
+                    <form method="POST" class="col-lg-6 pull-right d-inline"
                           action="{{route('export.containers.by.end.excel')}}">
                         @csrf
                         @method('POST')
@@ -114,9 +117,9 @@
                 </div>
 
                 <div class="card-body p-1 m-1">
-                    <div class="table-responsive hoverable-table">
-                        <table class="display w-100  text-nowrap table-bordered" id="example-table"
-                               style="text-align: center;">
+                    <div class="table-responsive table-hover">
+                        <table id="example-table"
+                               class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
                             <thead>
                             <tr>
                                 <th class="border-bottom-0 text-center">
@@ -125,7 +128,7 @@
                                 <th class="border-bottom-0 text-center">#</th>
                                 <th class="border-bottom-0 text-center">اسم الحاوية</th>
                                 <th class="border-bottom-0 text-center"> مقاس الحاوية</th>
-                                <th class="border-bottom-0 text-center"> مبلغ الايجار  غير شامل الضريبة</th>
+                                <th class="border-bottom-0 text-center"> مبلغ الايجار غير شامل الضريبة</th>
                                 <th class="border-bottom-0 text-center"> الحالة</th>
                                 <th style="width: 5%!important;" class="border-bottom-0 text-center">تحكم</th>
                             </tr>
@@ -218,8 +221,7 @@
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header text-center">
                         <h6 class="modal-title w-100" style="font-family: 'Almarai'; ">حذف حاوية</h6>
-                        <button aria-label="Close" class="close"
-                                data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+
                     </div>
                     <form action="{{ route('supervisor.containers.destroy', 'test') }}" method="post">
                         {{ method_field('delete') }}
