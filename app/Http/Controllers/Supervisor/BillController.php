@@ -96,7 +96,8 @@ class BillController extends Controller
                 'amount' => $container_amount,
                 'tax' => $container_tax,
                 'total_amount' => $container_total,
-                'delivery_date' => date('Y-m-d')
+                'delivery_date' => $contract->contract_start_date,
+                'receipt_date' => $contract->contract_end_date,
             ]);
         }
         if($paid > 0){

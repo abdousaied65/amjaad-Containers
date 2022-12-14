@@ -131,6 +131,8 @@ Route::group(
     Route::post('view-container-details', 'HomeController@view_container_details')->name('view.container.details');
 
     Route::get('contracts-bills', 'BillController@contracts_bills')->name('contracts.bills');
+    Route::post('/print-selected-bills', 'SearchController@print_selected')
+        ->name('print.selected.bills');
 
     Route::post('view-contract', 'BillController@view_contract')->name('view.contract');
 
@@ -160,6 +162,9 @@ Route::group(
     ]);
     Route::get('/print-selected-payments', 'PaymentController@print_selected')->name('print.selected.payments');
     Route::post('/export-payments-excel', 'PaymentController@export_payments_excel')->name('export.payments.excel');
+    Route::post('/select-payments', 'PaymentController@select_payments')->name('select.payments');
+
+    Route::post('/print-posted-payments', 'PaymentController@print_posted')->name('print.posted.payments');
 
 
     // unexecuted
@@ -169,7 +174,8 @@ Route::group(
 
     Route::get('unexecuted-contracts-bills', 'UnexecutedBillController@contracts_bills')->name('unexecuted.contracts.bills');
     Route::post('get-unexecuted-bill-total', 'UnexecutedBillController@getTotal')->name('bill.unexecuted.total');
-    Route::post('get-unexecuted-bill-total2', 'UnexecutedBillController@getTotal2')->name('bill.unexecuted.total2');
+    Route::post('get-unexecuted-bill-total2', 'UnexecutedBillController@getTotal2')
+        ->name('bill.unexecuted.total2');
     Route::post('get-unexecuted-container-details', 'UnexecutedBillController@getDetails')->name('unexecuted.containers.getDetails');
     Route::post('get-unexecuted-container-details-2', 'UnexecutedBillController@getDetails2')
         ->name('unexecuted.containers.getDetails2');
@@ -188,6 +194,7 @@ Route::group(
     Route::post('search-executed-by-company', 'SearchController@search_executed_by_company')->name('search.executed.by.company');
     Route::post('search-executed-by-phone', 'SearchController@search_executed_by_phone')->name('search.executed.by.phone');
     Route::post('search-executed-by-bill', 'SearchController@search_executed_by_bill')->name('search.executed.by.bill');
+    Route::post('search-executed-by-date', 'SearchController@search_executed_by_date')->name('search.executed.by.date');
 
     Route::post('search-unexecuted-by-company', 'SearchController@search_unexecuted_by_company')->name('search.unexecuted.by.company');
     Route::post('search-unexecuted-by-phone', 'SearchController@search_unexecuted_by_phone')->name('search.unexecuted.by.phone');

@@ -25,6 +25,22 @@ class SearchController extends Controller
         }
     }
 
+    public function search_executed_by_date(Request $request)
+    {
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        $companies = Company::all();
+        $data = Bill::where('type', 'executed')
+            ->whereBetween('created_at', [$from_date, date('Y-m-d', strtotime($to_date . ' +1 day'))])
+            ->get();
+        if ($data->isEmpty()) {
+            return view('supervisor.bill.index', compact('data', 'companies'))
+                ->with('error', 'لا يوجد فواتير وعقود منفذة فى هذه الفترة');
+        } else {
+            return view('supervisor.bill.index', compact('data', 'companies'));
+        }
+    }
+
     public function search_executed_by_phone(Request $request)
     {
         $phone_number = $request->phone_number;
@@ -101,5 +117,17 @@ class SearchController extends Controller
         }
     }
 
+    public function print_selected(Request $request)
+    {
+        $data = $request->all();
+        $bills_id = $request->bills;
+        $bills = new Collection;
+
+        foreach ($bills_id as $bill_id) {
+            $bill = Bill::FindOrFail($bill_id);
+            $bills->push($bill);
+        }
+        return view('supervisor.bill.print', compact('bills'));
+    }
 
 }

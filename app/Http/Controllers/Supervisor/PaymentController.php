@@ -70,4 +70,30 @@ class PaymentController extends Controller
     {
         return Excel::download(new PaymentsExport(), 'كل المدفوعات.xlsx');
     }
+
+
+    public function select_payments(Request $request)
+    {
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        $data = Payment::whereBetween('created_at', [$from_date, date('Y-m-d', strtotime($to_date . ' +1 day'))])
+            ->get();
+        $safes = Safe::all();
+        $companies = Company::all();
+        return view('supervisor.payments.index', compact('data','safes','companies'));
+    }
+
+    public function print_posted(Request $request)
+    {
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        if (!empty($from_date) && !empty($from_date)){
+            $payments = Payment::whereBetween('created_at', [$from_date, date('Y-m-d', strtotime($to_date . ' +1 day'))])
+                ->get();
+        }
+        else{
+            $payments = Payment::all();
+        }
+        return view('supervisor.payments.print', compact('payments'));
+    }
 }

@@ -25,7 +25,7 @@
         </div>
     @endif
     <!-- row -->
-    <div class="row">
+    <div class="row mt-3">
         @can('انشاء عقد + فاتورة')
             <div class="col-lg-12">
                 <a role="button" class="btn btn-lg btn-danger pull-left float-left"
@@ -36,9 +36,9 @@
             </div>
         @endcan
         <div class="col-lg-12">
-            <h3>
+            <h5>
                 الحاويات المؤجرة
-            </h3>
+            </h5>
         </div>
         <div class="col-lg-12">
             <div class="card p-3 mt-3">
@@ -55,19 +55,19 @@
                         @endforeach
                     </div>
                 @else
-                    <h4>
+                    <h6>
                         لا يوجد حاويات مؤجرة
-                    </h4>
+                    </h6>
                 @endif
             </div>
         </div>
     </div>
     <!-- row -->
-    <div class="row">
+    <div class="row mt-3 mb-3">
         <div class="col-lg-12">
-            <h3>
+            <h5>
                 الحاويات الفارغة
-            </h3>
+            </h5>
         </div>
         <div class="col-lg-12">
             <div class="card p-3 mt-3">
@@ -84,9 +84,9 @@
                         @endforeach
                     </div>
                 @else
-                    <h4>
+                    <h6>
                         لا يوجد حاويات فارغة
-                    </h4>
+                    </h6>
                 @endif
             </div>
         </div>

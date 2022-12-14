@@ -39,11 +39,13 @@
                                 </p>
                             </div>
                             <div class="table-responsive table-hover">
-                        <table id="example-table"
-                               class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
-                            <thead>
+                                <table id="example-table"
+                                       class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
+                                    <thead>
                                     <tr>
-                                        <th class="border-bottom-0 text-center">#</th>
+                                        <th class="border-bottom-0 text-center">
+                                            رقم الفاتورة
+                                        </th>
                                         <th class="border-bottom-0 text-center">
                                             رقم الحاوية
                                         </th>
@@ -64,11 +66,11 @@
                                         </th>
 
                                         <th class="border-bottom-0 text-center">
-                                             عدد الحاويات
+                                            عدد الحاويات
                                         </th>
 
                                         <th class="border-bottom-0 text-center">
-                                             الردود
+                                            الردود
                                         </th>
 
                                         <th class="border-bottom-0 text-center">
@@ -81,18 +83,17 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @php
-                                        $i = 0;
-                                    @endphp
-
-                                    @foreach ($containers as $key => $container)
+                                    <?php
+                                    $bill_containers = \App\Models\BillContainer::all();
+                                    ?>
+                                    @foreach ($bill_containers as $bill_container)
                                         <?php
-                                        $bill_container = \App\Models\BillContainer::where('container_id', $container->id)->latest()->first();
                                         $bill = $bill_container->bill;
-
+                                        $container = $bill_container->container;
                                         ?>
+
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $bill->id }}</td>
                                             <td>
                                                 {{$container->id}}
                                             </td>
@@ -131,16 +132,11 @@
                                                 {{$bill->contract->street}}
                                             </td>
 
-
                                             <td>
                                                 @if($container->status == "مؤجرة")
-                                                    <span class="badge badge-info">
-                                                        مؤجرة
-                                                    </span>
+                                                    مؤجرة
                                                 @elseif($container->status == "فارغة")
-                                                    <span class="badge badge-success">
-                                                        فارغة
-                                                    </span>
+                                                    فارغة
                                                 @endif
                                             </td>
                                         </tr>

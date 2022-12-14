@@ -32,14 +32,60 @@
                         عرض كل المدفوعات
                     </h5>
                 </div>
+                <form action="{{route('select.payments')}}" method="post">
+                    @csrf
+                    @method('POST')
+                    <div class="row mt-3 p-3 mb-3">
+                        <div class="col-md-4">
+                            <label> من تاريخ <span class="text-danger">*</span></label>
+                            <input
+                                @if(isset($_POST['from_date']))
+                                value="{{$_POST['from_date']}}"
+                                @else
+                                value="{{date('Y-m-d')}}"
+                                @endif
+                                class="form-control mg-b-20" name="from_date"
+                                required="" type="date">
+                        </div>
+                        <div class="col-md-4">
+                            <label> الى تاريخ <span class="text-danger">*</span></label>
+                            <input class="form-control mg-b-20"
+                                   @if(isset($_POST['to_date']))
+                                   value="{{$_POST['to_date']}}"
+                                   @else
+                                   value="{{date('Y-m-d')}}"
+                                   @endif
+                                   name="to_date" required=""
+                                   type="date">
+                        </div>
+                        <div class="col-md-4 text-center" style="padding-top: 30px!important;">
+                            <button class="btn btn-primary pd-x-20" type="submit">
+                                عرض التقرير
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+
                 <div class="row mt-3 mb-1 text-center justify-content-center align-content-center">
-                    <form class="col-4" method="GET" action="{{route('print.selected.payments')}}">
+                    <form class="col-3" method="GET" action="{{route('print.selected.payments')}}">
                         <button type="submit" class="btn btn-md btn-light-warning m-1 print_selected">
                             <i class="fa fa-print"></i>
-                            طباعة
+                            طباعة الكل
                         </button>
                     </form>
-                    <form class="col-4" method="POST" action="{{route('export.payments.excel')}}">
+
+                    <form class="col-3" method="POST" action="{{route('print.posted.payments')}}">
+                        @csrf
+                        <input type="hidden" name="from_date" @if(isset($_POST['from_date'])) value="{{$_POST['from_date']}}" @endif id="from_date" />
+                        <input type="hidden" name="to_date" @if(isset($_POST['to_date'])) value="{{$_POST['to_date']}}" @endif id="to_date" />
+                        <button type="submit" class="btn btn-md btn-light-danger m-1 print_selected">
+                            <i class="fa fa-print"></i>
+                            طباعة المحدد
+                        </button>
+                    </form>
+
+                    <form class="col-3" method="POST" action="{{route('export.payments.excel')}}">
                         @csrf
                         @method('POST')
                         <button type="submit" class="btn btn-md btn-light-success m-1">
@@ -47,7 +93,7 @@
                             تصدير الكل EXCEL
                         </button>
                     </form>
-                    <div class="col-4">
+                    <div class="col-3">
                         <a href="{{route('supervisor.payments.create')}}" role="button"
                            class="btn btn-md btn-light-info">
                             <i class="fa fa-plus"></i>
@@ -104,6 +150,18 @@
                             </tr>
                             </tfoot>
                         </table>
+                    </div>
+                    <div class="mt-4 mb-4 text-center bg-info text-white p-2 fw-bold" style="font-size: 20px!important;">
+                        الاجمالى :
+                        <?php
+                        $total = 0;
+                        if (!$data->isEmpty()){
+                            foreach ($data as $payment){
+                                $total = $total + $payment->amount;
+                            }
+                        }
+                        ?>
+                        {{$total}}
                     </div>
                 </div>
             </div>

@@ -10,7 +10,7 @@ class BillContainer extends Model
     protected $guard = 'supervisor-web';
     protected $guard_name = 'supervisor-web';
     protected $fillable = [
-        'bill_id', 'contract_id', 'container_id', 'amount', 'tax', 'total_amount','delivery_date'
+        'bill_id', 'contract_id', 'container_id', 'amount', 'tax', 'total_amount','delivery_date','receipt_date'
     ];
 
     public function bill()

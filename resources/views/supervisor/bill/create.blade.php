@@ -172,7 +172,7 @@
                                     تاريخ نهاية العقد
                                 </label>
                                 <input required class="form-control" type="date"
-                                       value="{{date('Y-m-d',strtotime('+1 year'))}}"
+                                       value="{{date('Y-m-d')}}"
                                        name="contract_end_date"/>
                             </div>
                             <div class="col-md-3">
@@ -455,6 +455,33 @@
                 "_token": "{{ csrf_token() }}"
             }, function (data) {
                 $('#total_amount').val(data.total_amount);
+            });
+        });
+
+        $('#unit_price').on('keyup', function () {
+
+            let containers_number = $('#containers_number').val();
+            let unit_price = $(this).val();
+            let discount_percent = $('#discount_percent').val();
+            let vat_percent = $('#vat_percent').val();
+
+            $.post("{{route('unexecuted.containers.getDetails2')}}", {
+                containers_number: containers_number,
+                unit_price:unit_price,
+                "_token": "{{ csrf_token() }}"
+            }, function (data) {
+                $('#quantity_price').val(data.quantity_price);
+                $('#tax_total').val(data.tax_total);
+                $('#final_total').val(data.final_total);
+
+                $.post("{{route('bill.unexecuted.total2')}}",{
+                    quantity_price: data.quantity_price,
+                    discount_percent: discount_percent,
+                    vat_percent: vat_percent,
+                    "_token": "{{ csrf_token() }}"
+                }, function (data) {
+                    $('#total_amount').val(data.total_amount);
+                });
             });
         });
 

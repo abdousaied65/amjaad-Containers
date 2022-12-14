@@ -79,45 +79,26 @@
 
                             </div>
 
-                            <div class="col-md-4">
-                                <label class="d-block">
-                                    تاريخ بداية العقد
-                                </label>
-                                <input required class="form-control" type="date" value="{{date('Y-m-d')}}"
-                                       name="contract_start_date"/>
-                            </div>
-
                         </div>
                         <hr>
-
                         <div class="details">
 
-
                         </div>
-
                         <hr>
                         <div class="row mt-4 mb-4">
-                            <div class="col-md-3">
-                                <label class="d-block">
-                                    تاريخ نهاية العقد
-                                </label>
-                                <input required class="form-control" type="date"
-                                       value="{{date('Y-m-d',strtotime('+1 year'))}}"
-                                       name="contract_end_date"/>
-                            </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label class="d-block">
                                     المدينة
                                 </label>
                                 <input class="form-control" type="text" name="city"/>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label class="d-block">
                                     الحى
                                 </label>
                                 <input class="form-control" type="text" name="district"/>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label class="d-block">
                                     الشارع
                                 </label>

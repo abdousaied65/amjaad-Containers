@@ -53,6 +53,28 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="col-md-4">
+                                <label> من تاريخ <span class="text-danger">*</span></label>
+                                <input
+                                    @if(isset($_POST['from_date']))
+                                    value="{{$_POST['from_date']}}"
+                                    @else
+                                    value="{{date('Y-m-d')}}"
+                                    @endif
+                                    class="form-control mg-b-20" name="from_date"
+                                    required="" type="date">
+                            </div>
+                            <div class="col-md-4">
+                                <label> الى تاريخ <span class="text-danger">*</span></label>
+                                <input class="form-control mg-b-20"
+                                       @if(isset($_POST['to_date']))
+                                       value="{{$_POST['to_date']}}"
+                                       @else
+                                       value="{{date('Y-m-d')}}"
+                                       @endif
+                                       name="to_date" required=""
+                                       type="date">
+                            </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                             <button class="btn btn-primary pd-x-20" type="submit">
@@ -66,6 +88,10 @@
                                 <p class="alert alert-success alert-md text-center">
                                     تقرير الشركة
                                     [ {{$company_k->company_name}} ]
+                                    من تاريخ
+                                    [{{$_POST['from_date']}}]
+                                    الى تاريخ
+                                    [{{$_POST['to_date']}}]
                                 </p>
                                 <div class="col-lg-12 mt-5">
                                     <p class="alert alert-danger alert-md text-center"> عرض بيانات الشركة </p>
@@ -102,7 +128,13 @@
 
 
                                 <div class="col-lg-12 mt-5">
-                                    <p class="alert alert-danger alert-md text-center"> عرض فواتير الشركة </p>
+                                    <p class="alert alert-danger alert-md text-center">
+                                        عرض فواتير الشركة
+                                        من تاريخ
+                                        [{{$_POST['from_date']}}]
+                                        الى تاريخ
+                                        [{{$_POST['to_date']}}]
+                                    </p>
                                 </div>
                                 <div class="table-responsive table-hover">
                         <table id="example-table"
@@ -235,6 +267,12 @@
                                                                 <i class="fa fa-print"></i>
                                                                 طباعة الفاتورة
                                                             </a>
+
+                                                            <a target="_blank" href="{{route('print.both',$bill->id)}}"
+                                                               class="dropdown-item">
+                                                                <i class="fa fa-print"></i>
+                                                                طباعة العقد + الفاتورة
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -253,7 +291,13 @@
                                 <div class="clearfix"></div>
 
                                 <div class="col-lg-12 mt-5">
-                                    <p class="alert alert-danger alert-md text-center"> عرض احصائيات فواتير الشركة </p>
+                                    <p class="alert alert-danger alert-md text-center">
+                                        عرض احصائيات فواتير الشركة
+                                        من تاريخ
+                                        [{{$_POST['from_date']}}]
+                                        الى تاريخ
+                                        [{{$_POST['to_date']}}]
+                                    </p>
                                 </div>
                                 <table class="table table-bordered mt-5 mb-5 text-center">
                                     <thead>
@@ -297,12 +341,18 @@
                                 </table>
 
                                 <div class="col-lg-12 mt-5">
-                                    <p class="alert alert-danger alert-md text-center"> عرض مدفوعات الشركة </p>
+                                    <p class="alert alert-danger alert-md text-center">
+                                        عرض مدفوعات الشركة
+                                        من تاريخ
+                                        [{{$_POST['from_date']}}]
+                                        الى تاريخ
+                                        [{{$_POST['to_date']}}]
+                                    </p>
                                 </div>
                                 <div class="table-responsive table-hover">
-                        <table id="example-table"
-                               class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
-                            <thead>
+                                <table id="example-table"
+                                       class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
+                                    <thead>
                                         <tr>
                                             <th class="border-bottom-0 text-center">#</th>
                                             <th class="border-bottom-0 text-center"> الخزنة</th>
@@ -315,7 +365,7 @@
                                             $i = 0;$total_paid = 0;
                                         @endphp
 
-                                        @foreach ($company_k->payments as $key => $payment)
+                                        @foreach ($payments as $key => $payment)
                                             <tr>
                                                 <td>{{ ++$i }}</td>
                                                 <td>
@@ -342,11 +392,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-
-                                {{--                                <a class="btn btn-md btn-primary" href="javascript:;" onclick="window.print();">--}}
-                                {{--                                    <i class="fa fa-print"></i>--}}
-                                {{--                                    طباعة التقرير--}}
-                                {{--                                </a>--}}
                             </div>
                         </div>
                     @endif

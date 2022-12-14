@@ -371,6 +371,7 @@ class UnexecutedBillController extends Controller
     {
         $containers_ids = $request->container_id;
         $delivery_dates = $request->delivery_date;
+        $receipt_dates = $request->receipt_date;
 
         $bill_id = $request->bill_id;
         $bill = Bill::FindOrFail($bill_id);
@@ -393,13 +394,16 @@ class UnexecutedBillController extends Controller
                 'tax' => $container_tax,
                 'total_amount' => $container_total,
                 'delivery_date' => $delivery_dates[0],
+                'receipt_date' => $receipt_dates[0],
             ]);
             $container->update([
                 'status' => 'مؤجرة'
             ]);
         }
-
-
+        $contract->update([
+            'contract_start_date' => $delivery_dates[0],
+            'contract_end_date' => $receipt_dates[0],
+        ]);
         $bill->update([
             'type' => 'executed'
         ]);
@@ -426,6 +430,12 @@ class UnexecutedBillController extends Controller
                        تاريخ تسليم الحاوية
                     </label>
                     <input class="form-control" name="delivery_date[]" type="date" dir="ltr" value="' . date('Y-m-d') . '" />
+                </div>
+                <div class="col-md-3">
+                    <label class="d-block">
+                       تاريخ إستلام الحاوية
+                    </label>
+                    <input class="form-control" name="receipt_date[]" type="date" dir="ltr" value="' . date('Y-m-d') . '" />
                 </div>
             </div>
             ';

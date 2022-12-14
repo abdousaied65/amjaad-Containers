@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static FindOrFail($bill_id)
+ */
 class Bill extends Model
 {
     protected $table = "bills";

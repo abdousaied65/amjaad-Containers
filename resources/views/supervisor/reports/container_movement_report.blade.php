@@ -78,6 +78,10 @@
                                 <p class="alert alert-success alert-md text-center">
                                     تقرير حركة الحاوية
                                     [ {{$container_k->name}} ]
+                                    من تاريخ
+                                    [{{$_POST['from_date']}}]
+                                    الى تاريخ
+                                    [{{$_POST['to_date']}}]
                                 </p>
                                 <div class="col-lg-12 mt-5">
                                     <p class="alert alert-danger alert-md text-center"> عرض بيانات الحاوية </p>
@@ -88,7 +92,7 @@
                                         <tr>
                                             <th class="border-bottom-0 text-center">اسم الحاوية</th>
                                             <th class="border-bottom-0 text-center"> مقاس الحاوية</th>
-                                            <th class="border-bottom-0 text-center"> مبلغ الايجار  غير شامل الضريبة</th>
+                                            <th class="border-bottom-0 text-center"> مبلغ الايجار غير شامل الضريبة</th>
                                             <th class="border-bottom-0 text-center"> الحالة</th>
                                         </tr>
                                         </thead>
@@ -105,12 +109,18 @@
                                     </table>
                                 </div>
                                 <div class="col-lg-12 mt-5">
-                                    <p class="alert alert-danger alert-md text-center"> عرض فواتير الحاوية </p>
+                                    <p class="alert alert-danger alert-md text-center"> عرض فواتير الحاوية
+
+                                        من تاريخ
+                                        [{{$_POST['from_date']}}]
+                                        الى تاريخ
+                                        [{{$_POST['to_date']}}]
+                                    </p>
                                 </div>
                                 <div class="table-responsive table-hover">
-                        <table id="example-table"
-                               class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
-                            <thead>
+                                    <table id="example-table"
+                                           class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
+                                        <thead>
                                         <tr>
                                             <th class="border-bottom-0 text-center">#</th>
                                             <th class="border-bottom-0 text-center">
@@ -166,7 +176,8 @@
                                             <tr>
                                                 <td>{{ ++$i }}</td>
                                                 <td>
-                                                    <a data-toggle="modal" contract_id="{{$bill_container->contract->id}}"
+                                                    <a data-toggle="modal"
+                                                       contract_id="{{$bill_container->contract->id}}"
                                                        href="#modaldemo8"
                                                        class="view_contract">
                                                         تفاصيل
@@ -228,7 +239,8 @@
                                                                 <i class="fa fa-print"></i>
                                                                 طباعة العقد
                                                             </a>
-                                                            <a target="_blank" href="{{route('print.bill',$bill_container->bill->id)}}"
+                                                            <a target="_blank"
+                                                               href="{{route('print.bill',$bill_container->bill->id)}}"
                                                                class="dropdown-item">
                                                                 <i class="fa fa-print"></i>
                                                                 طباعة الفاتورة
@@ -250,7 +262,13 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="col-lg-12 mt-5">
-                                    <p class="alert alert-danger alert-md text-center"> عرض احصائيات فواتير الحاوية </p>
+                                    <p class="alert alert-danger alert-md text-center"> عرض احصائيات فواتير الحاوية
+
+                                        من تاريخ
+                                        [{{$_POST['from_date']}}]
+                                        الى تاريخ
+                                        [{{$_POST['to_date']}}]
+                                    </p>
                                 </div>
                                 <table class="table table-bordered mt-5 mb-5 text-center">
                                     <thead>

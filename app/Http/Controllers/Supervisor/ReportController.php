@@ -44,9 +44,16 @@ class ReportController extends Controller
         $company_id = $request->company_id;
         $company_k = Company::FindOrFail($company_id);
         $companies = Company::all();
-        $bills = Bill::where('company_id', $company_id)->get();
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        $bills = Bill::where('company_id', $company_id)
+            ->whereBetween('created_at', [$from_date, date('Y-m-d', strtotime($to_date . ' +1 day'))])
+            ->get();
+        $payments = Payment::where('company_id', $company_id)
+            ->whereBetween('created_at', [$from_date, date('Y-m-d', strtotime($to_date . ' +1 day'))])
+            ->get();
         return view('supervisor.reports.companies_report',
-            compact('company_k', 'companies', 'bills'));
+            compact('company_k', 'companies','payments', 'bills'));
     }
 
     public function safes_report()
@@ -60,7 +67,15 @@ class ReportController extends Controller
         $safe_id = $request->safe_id;
         $safe_k = Safe::FindOrFail($safe_id);
         $safes = Safe::all();
-        $payments = Payment::where('safe_id', $safe_id)->get();
+
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+
+        $payments = Payment::where('safe_id', $safe_id)
+            ->whereBetween('created_at', [$from_date, date('Y-m-d', strtotime($to_date . ' +1 day'))])
+            ->get();
+
+
         return view('supervisor.reports.safes_report',
             compact('safe_k', 'safes', 'payments'));
     }
@@ -70,6 +85,9 @@ class ReportController extends Controller
         $containers = Container::where('status', 'مؤجرة')->get();
         return view('supervisor.reports.rental_container_report',compact('containers'));
     }
+
+
+
     public function daily_safe(){
         $date = date('Y-m-d');
         $payments = Payment::whereBetween('created_at', [$date, date('Y-m-d', strtotime($date . ' +1 day'))])->get();

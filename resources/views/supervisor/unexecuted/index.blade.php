@@ -24,7 +24,7 @@
     @endif
     @if (isset($error))
         <div class="alert alert-danger  fade show">
-            <button class="close" data-dismiss="alert" aria-label="Close">×</button>
+
             {{ $error }}
         </div>
     @endif
@@ -316,7 +316,6 @@
                                     @endforeach
                                 </select>
                             </div>
-
                         </div>
                         <div class="row details p-2">
                         </div>
