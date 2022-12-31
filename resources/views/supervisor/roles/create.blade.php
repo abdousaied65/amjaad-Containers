@@ -283,7 +283,7 @@
 
                             <tr>
                                 <td>9</td>
-                                <td> المدفوعات</td>
+                                <td> سندات القبض </td>
                                 <td>
                                     <label class="switch">
                                         <input type="checkbox" name="permission[]" value="24">

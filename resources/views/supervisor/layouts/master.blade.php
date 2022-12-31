@@ -13,17 +13,20 @@
     </title>
     @include('supervisor.layouts.head')
     <style>
-        label{
-            display: block!important;
-            margin-bottom: 10px!important;
+        label {
+            display: block !important;
+            margin-bottom: 10px !important;
         }
+
         .select2-selection__rendered {
             line-height: 40px !important;
             border-radius: 0 !important;
         }
-        .dataTables_length{
-            float: right!important;
+
+        .dataTables_length {
+            float: right !important;
         }
+
         .select2-container .select2-selection--single {
             height: 40px !important;
             border-radius: 0 !important;
@@ -46,23 +49,54 @@
 
         table tr td {
             font-size: 14px !important;
-            padding:5px!important; ;
+            padding: 5px !important;;
         }
-        .form-control{
-            height:40px!important;
-            border-radius: 0px!important;
+
+        .form-control {
+            height: 40px !important;
+            border-radius: 0px !important;
         }
-        .btn,.btn-md,.btn-sm,.btn.dropdown-toggle.bs-placeholder, .btn.dropdown-toggle{
-            height:40px!important;
-            margin: 0!important;
+
+        .btn, .btn-md, .btn-sm, .btn.dropdown-toggle.bs-placeholder, .btn.dropdown-toggle {
+            height: 40px !important;
+            margin: 0 !important;
+        }
+        .alert-default{
+            border:1px solid #aaa!important;
+            color: #000!important;
+            box-shadow: 1px 1px 8px #ddd;
+        }
+        .border-bottom-0{
+            border-bottom: 0!important;
+        }
+    </style>
+    <style type="text/css" media="print">
+        .no-print {
+            display: none !important;
+        }
+        * {
+            font-size: 14px !important;
+            color: #000 !important;
+            font-weight: bold !important;
+            page-break-before: avoid;
+            page-break-after: avoid;
+            page-break-inside: avoid;
+        }
+
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            page-break-before: avoid;
+            page-break-after: avoid;
+            page-break-inside: avoid;
         }
     </style>
 </head>
 <body dir="rtl" style="direction: rtl">
 <div id="layout-a" class="theme-blue">
     <!-- Navigation -->
-    @include('supervisor.layouts.main-sidebar')
-    <!-- main body area -->
+@include('supervisor.layouts.main-sidebar')
+<!-- main body area -->
     <div class="main px-xl-5 px-lg-4 px-md-3">
         @include('supervisor.layouts.main-header')
         @yield('content')

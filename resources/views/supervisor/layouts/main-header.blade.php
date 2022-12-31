@@ -1,7 +1,9 @@
-<a class="nav-link ml d-block d-xl-none menu-toggle mt-3 float-right pull-right text-right" href="#"><i class="fa fa-bars"></i></a>
+<a class="nav-link ml d-block d-xl-none menu-toggle mt-3 float-right pull-right text-right no-print" href="#">
+    <i class="fa fa-bars"></i>
+</a>
 
 <!-- Body: Header -->
-<div class="body-header border-bottom d-flex py-3">
+<div class="body-header border-bottom d-flex py-3 no-print">
     <div class="container-fluid">
         <!-- header rightbar icon -->
         <div class="h-right flex-grow-1 justify-content-end d-flex align-items-center">

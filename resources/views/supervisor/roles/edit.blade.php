@@ -351,7 +351,7 @@
 
                             <tr>
                                 <td>9</td>
-                                <td> المدفوعات</td>
+                                <td> السندات</td>
                                 <td>
                                     <label class="switch">
                                         <input type="checkbox" name="permission[]"

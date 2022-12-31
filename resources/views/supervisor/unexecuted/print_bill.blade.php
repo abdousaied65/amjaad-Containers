@@ -118,7 +118,14 @@
     <tr>
         <td class="thisTD">
             <center style="margin:5px auto;">
-                <span style="font-weight:bold;border:1px dashed #333; padding: 5px 30px;"> فاتورة ضريبية مبسطة </span>
+                <div style="font-weight:bold;border:1px dashed #333; padding: 5px 30px;">
+                    <h1>
+                        فاتورة ضريبية مبسطة
+                    </h1>
+                    <h1>
+                        عقد حاويات
+                    </h1>
+                </div>
             </center>
 
             <div class="row" dir="rtl">
@@ -258,13 +265,13 @@
                         <br>
                         <br>
                         سجل تجارى :
-                        {{$settings->tax_number}}
+                        {{$settings->commercial_record}}
                     </td>
                     <td style="width: 50%!important;">
                         الرقم الضريبى
                         <br>
                         <br>
-                        {{$settings->commercial_record}}
+                        {{$settings->tax_number}}
                     </td>
                 </tr>
                 </tbody>

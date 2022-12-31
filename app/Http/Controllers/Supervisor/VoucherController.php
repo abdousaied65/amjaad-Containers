@@ -2,29 +2,29 @@
 
 namespace App\Http\Controllers\Supervisor;
 
-use App\Exports\PaymentsExport;
+use App\Exports\VouchersExport;
 use App\Models\Company;
-use App\Models\Payment;
+use App\Models\Voucher;
 use App\Http\Controllers\Controller;
 use App\Models\Safe;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
-class PaymentController extends Controller
+class VoucherController extends Controller
 {
     public function index(Request $request)
     {
-        $data = Payment::all();
+        $data = Voucher::all();
         $safes = Safe::all();
         $companies = Company::all();
-        return view('supervisor.payments.index', compact('data','safes','companies'));
+        return view('supervisor.vouchers.index', compact('data','safes','companies'));
     }
 
     public function create()
     {
         $safes = Safe::all();
         $companies = Company::all();
-        return view('supervisor.payments.create', compact('safes', 'companies'));
+        return view('supervisor.vouchers.create', compact('safes', 'companies'));
     }
 
     public function store(Request $request)
@@ -36,12 +36,12 @@ class PaymentController extends Controller
         ]);
 
         $input = $request->all();
-        $payment = Payment::create($input);
+        $voucher = Voucher::create($input);
 
         $safe_id = $request->safe_id;
         $safe = Safe::FindOrFail($safe_id);
         $old_balance = $safe->balance;
-        $new_balance = $old_balance + $request->amount;
+        $new_balance = $old_balance - $request->amount;
         $new_balance = round($new_balance, 2);
         $safe->update([
             'balance' => $new_balance
@@ -50,37 +50,37 @@ class PaymentController extends Controller
         $company_id = $request->company_id;
         $company = Company::FindOrFail($company_id);
         $old_debts = $company->debts;
-        $new_debts = $old_debts - $request->amount;
+        $new_debts = $old_debts + $request->amount;
         $new_debts = round($new_debts, 2);
         $company->update([
             'debts' => $new_debts
         ]);
 
-        return redirect()->route('supervisor.payments.index')
-            ->with('success', 'تم اضافة مدفوعات بنجاح');
+        return redirect()->route('supervisor.vouchers.index')
+            ->with('success', 'تم اضافة سند صرف بنجاح');
     }
 
     public function print_selected()
     {
-        $payments = Payment::all();
-        return view('supervisor.payments.print', compact('payments'));
+        $vouchers = Voucher::all();
+        return view('supervisor.vouchers.print', compact('vouchers'));
     }
 
-    public function export_payments_excel()
+    public function export_vouchers_excel()
     {
-        return Excel::download(new PaymentsExport(), 'كل المدفوعات.xlsx');
+        return Excel::download(new VouchersExport(), 'كل سندات الصرف.xlsx');
     }
 
 
-    public function select_payments(Request $request)
+    public function select_vouchers(Request $request)
     {
         $from_date = $request->from_date;
         $to_date = $request->to_date;
-        $data = Payment::whereBetween('created_at', [$from_date, date('Y-m-d', strtotime($to_date . ' +1 day'))])
+        $data = Voucher::whereBetween('created_at', [$from_date, date('Y-m-d', strtotime($to_date . ' +1 day'))])
             ->get();
         $safes = Safe::all();
         $companies = Company::all();
-        return view('supervisor.payments.index', compact('data','safes','companies'));
+        return view('supervisor.vouchers.index', compact('data','safes','companies'));
     }
 
     public function print_posted(Request $request)
@@ -88,12 +88,12 @@ class PaymentController extends Controller
         $from_date = $request->from_date;
         $to_date = $request->to_date;
         if (!empty($from_date) && !empty($from_date)){
-            $payments = Payment::whereBetween('created_at', [$from_date, date('Y-m-d', strtotime($to_date . ' +1 day'))])
+            $vouchers = Voucher::whereBetween('created_at', [$from_date, date('Y-m-d', strtotime($to_date . ' +1 day'))])
                 ->get();
         }
         else{
-            $payments = Payment::all();
+            $vouchers = Voucher::all();
         }
-        return view('supervisor.payments.print', compact('payments'));
+        return view('supervisor.vouchers.print', compact('vouchers'));
     }
 }

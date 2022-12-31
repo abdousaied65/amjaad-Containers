@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static whereBetween(string $string, array $array)
  */
-class Payment extends Model
+class Receipt extends Model
 {
-    protected $table = "payments";
+    protected $table = "receipts";
     protected $guard = 'supervisor-web';
     protected $guard_name = 'supervisor-web';
     protected $fillable = [
-        'bill_id', 'safe_id', 'contract_id', 'amount', 'company_id'
+        'bill_id', 'safe_id', 'contract_id', 'amount', 'company_id','notes'
     ];
 
     public function bill()

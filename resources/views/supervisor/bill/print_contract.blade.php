@@ -171,9 +171,13 @@ $Arabic = new Arabic();
                     هاتف :
                     {{$contract->company->phone_number}}
                 </span>
-                <span>
+                <span style="margin-left: 150px;">
                     جوال :
                     {{$contract->company->mobile_number}}
+                </span>
+                <span>
+                    الرقم الضريبى :
+                    {{$contract->company->tax_number}}
                 </span>
             </div>
             <div>

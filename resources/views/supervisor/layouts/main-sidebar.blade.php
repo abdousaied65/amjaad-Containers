@@ -1,5 +1,5 @@
 <!-- sidebar -->
-<div class="sidebar px-3 py-2 py-md-3">
+<div class="sidebar px-3 py-2 py-md-3 no-print">
     <div class="d-flex flex-column h-100">
         <div class="d-flex align-items-center">
             <h4 class="sidebar-title flex-grow-1 text-center justify-content-center">
@@ -28,10 +28,34 @@
                     </span> </a>
                     <ul class="sub-menu collapse {{ Request::is('*/settings','*/settings/*') ? 'show' : '' }}"
                         id="menu-settings">
-                        <li><a class="ms-link {{ Request::is('*/supervisors') ? 'active' : '' }}"
+                        <li><a class="ms-link {{ Request::is('*/settings') ? 'active' : '' }}"
                                href="{{route('supervisor.settings.index')}}">
                                 الاعدادات العامة للنظام
                             </a></li>
+
+                        <li class="collapsed">
+                            <a class="m-link {{ Request::is('*/terms','*/terms/*') ? 'active' : '' }}"
+                               data-bs-toggle="collapse" data-bs-target="#menu-terms" href="#">
+                                <i class="fa fa-list"></i>
+                                <span>
+                                    شروط عقد الحاوية
+                                </span>
+                            </a>
+                            <ul class="sub-menu collapse {{ Request::is('*/terms','*/terms/*') ? 'show' : '' }}"
+                                id="menu-terms">
+                                <li>
+                                    <a class="ms-link {{ Request::is('*/terms/create') ? 'active' : '' }}"
+                                       href="{{route('supervisor.terms.create')}}">
+                                        اضافة جديد
+                                    </a>
+                                    <a class="ms-link {{ Request::is('*/terms') ? 'active' : '' }}"
+                                       href="{{route('supervisor.terms.index')}}">
+                                        عرض الكل
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
                     </ul>
                 </li>
             @endcan
@@ -209,29 +233,53 @@
             @endcan
 
 
-            @can(['اضافة مدفوعات','عرض مدفوعات'])
+            @can(['اضافة سندات','عرض سندات'])
                 <li class="collapsed">
-                    <a class="m-link {{ Request::is('*/payments','*/payments/*') ? 'active' : '' }}"
-                       data-bs-toggle="collapse" data-bs-target="#menu-payments" href="#"><i
+                    <a class="m-link {{ Request::is('*/receipts','*/receipts/*') ? 'active' : '' }}"
+                       data-bs-toggle="collapse" data-bs-target="#menu-receipts" href="#"><i
                             class="fa fa-money-bill"></i> <span>
-                        ادارة المدفوعات
+                        ادارة سندات القبض
                     </span> </a>
-                    <ul class="sub-menu collapse {{ Request::is('*/payments','*/payments/*') ? 'show' : '' }}"
-                        id="menu-payments">
-                        @can('اضافة مدفوعات')
-                            <li><a class="ms-link {{ Request::is('*/payments/create') ? 'active' : '' }}"
-                                   href="{{route('supervisor.payments.create')}}">
+                    <ul class="sub-menu collapse {{ Request::is('*/receipts','*/receipts/*') ? 'show' : '' }}"
+                        id="menu-receipts">
+                        @can('اضافة سندات')
+                            <li><a class="ms-link {{ Request::is('*/receipts/create') ? 'active' : '' }}"
+                                   href="{{route('supervisor.receipts.create')}}">
                                     اضافة جديد
                                 </a></li>
                         @endcan
-                        @can('عرض مدفوعات')
-                            <li><a class="ms-link {{ Request::is('*/payments') ? 'active' : '' }}"
-                                   href="{{route('supervisor.payments.index')}}">
+                        @can('عرض سندات')
+                            <li><a class="ms-link {{ Request::is('*/receipts') ? 'active' : '' }}"
+                                   href="{{route('supervisor.receipts.index')}}">
                                     عرض الكل
                                 </a></li>
                         @endcan
                     </ul>
                 </li>
+
+                <li class="collapsed">
+                    <a class="m-link {{ Request::is('*/vouchers','*/vouchers/*') ? 'active' : '' }}"
+                       data-bs-toggle="collapse" data-bs-target="#menu-vouchers" href="#"><i
+                            class="fa fa-money-bill"></i> <span>
+                        ادارة سندات الصرف
+                    </span> </a>
+                    <ul class="sub-menu collapse {{ Request::is('*/vouchers','*/vouchers/*') ? 'show' : '' }}"
+                        id="menu-vouchers">
+                        @can('اضافة سندات')
+                            <li><a class="ms-link {{ Request::is('*/vouchers/create') ? 'active' : '' }}"
+                                   href="{{route('supervisor.vouchers.create')}}">
+                                    اضافة جديد
+                                </a></li>
+                        @endcan
+                        @can('عرض سندات')
+                            <li><a class="ms-link {{ Request::is('*/vouchers') ? 'active' : '' }}"
+                                   href="{{route('supervisor.vouchers.index')}}">
+                                    عرض الكل
+                                </a></li>
+                        @endcan
+                    </ul>
+                </li>
+
             @endcan
 
 
@@ -273,6 +321,20 @@
                                 <a class="ms-link {{ Request::is('*/daily-safe') ? 'active' : '' }}"
                                    href="{{ route('daily.safe') }}">
                                     اغلاق يومية الصندوق
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="ms-link {{ Request::is('*/receipt-report') ? 'active' : '' }}"
+                                   href="{{ route('receipt.report') }}">
+                                    تقرير سندات القبض
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="ms-link {{ Request::is('*/voucher-report') ? 'active' : '' }}"
+                                   href="{{ route('voucher.report') }}">
+                                    تقرير سندات الصرف
                                 </a>
                             </li>
 

@@ -8,9 +8,10 @@ use App\Models\BillContainer;
 use App\Models\Company;
 use App\Models\Container;
 use App\Models\Contract;
-use App\Models\Payment;
+use App\Models\Receipt;
 use App\Models\Safe;
 use App\Models\Setting;
+use App\Models\Term;
 use Illuminate\Http\Request;
 
 class UnexecutedBillController extends Controller
@@ -74,7 +75,7 @@ class UnexecutedBillController extends Controller
 
 
         if ($paid > 0) {
-            $payment = Payment::create($data);
+            $receipt = Receipt::create($data);
         }
 
         if ($paid == "" || $paid == 0) {
@@ -270,7 +271,8 @@ class UnexecutedBillController extends Controller
         $bill = Bill::FindOrFail($id);
         $contract = $bill->contract;
         $settings = Setting::first();
-        return view('supervisor.unexecuted.print_both', compact('contract', 'bill', 'settings'));
+        $terms = Term::all();
+        return view('supervisor.unexecuted.print_both', compact('contract','terms', 'bill', 'settings'));
     }
 
     public function getDetails(Request $request)

@@ -14,9 +14,9 @@ class Company extends Model
         'address', 'tax_number', 'commercial_record', 'debts'
     ];
 
-    public function payments()
+    public function receipts()
     {
-        return $this->hasMany('\App\Models\Payment', 'company_id', 'id');
+        return $this->hasMany('\App\Models\Receipt', 'company_id', 'id');
     }
 
 }

@@ -30,30 +30,44 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header bg-primary pb-0">
-                    <h5 class="text-white text-center p-1">
-                        تقرير الخزنات
+                    <h5 class="p-1 text-center text-white">
+                        تقرير سندات الصرف
                     </h5>
                 </div>
                 <div class="card-body p-1 m-1">
-                    <form action="{{route('safes.report.post')}}" method="post">
+                    <form action="{{route('voucher.report.post')}}" method="post">
                         @csrf
                         @method('POST')
                         <div class="row m-t-3 mb-3">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <label> اختر الشركة <span class="text-danger">*</span></label>
+                                <select required class="form-control w-100 data-table"
+                                        name="company_id" id="company_id">
+                                    <option value="">اختر الشركة</option>
+                                    @foreach($companies as $company)
+                                        <option
+                                            @if(isset($_POST['company_id']) && $_POST['company_id'] == $company->id)
+                                            selected
+                                            @endif
+                                            value="{{$company->id}}">{{$company->company_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3">
                                 <label> اختر الخزنة <span class="text-danger">*</span></label>
                                 <select required class="form-control w-100 data-table"
                                         name="safe_id" id="safe_id">
-                                    <option value="">اختر الخزنة</option>
+                                    <option value="all"> كل الخزن</option>
                                     @foreach($safes as $safe)
                                         <option
-                                            @if(isset($safe_k) && $safe_k->id == $safe->id)
+                                            @if(isset($_POST['safe_id']) && $_POST['safe_id'] == $safe->id)
                                             selected
                                             @endif
                                             value="{{$safe->id}}">{{$safe->safe_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label> من تاريخ <span class="text-danger">*</span></label>
                                 <input
                                     @if(isset($_POST['from_date']))
@@ -64,7 +78,7 @@
                                     class="form-control mg-b-20" name="from_date"
                                     required="" type="date">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label> الى تاريخ <span class="text-danger">*</span></label>
                                 <input class="form-control mg-b-20"
                                        @if(isset($_POST['to_date']))
@@ -75,7 +89,6 @@
                                        name="to_date" required=""
                                        type="date">
                             </div>
-
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                             <button class="btn btn-primary pd-x-20" type="submit" name="submit">
@@ -83,101 +96,107 @@
                             </button>
                         </div>
                     </form>
-                    @if(isset($receipts) && !$receipts->isEmpty())
+                    @if(isset($vouchers) && !$vouchers->isEmpty())
                         <div class="row mt-3 mb-3">
                             <div class="col-md-12">
 
                                 <p class="alert alert-default alert-md text-center">
-                                    تقرير الخزنة
-                                    [ {{$safe_k->safe_name}} ]
+                                    تقرير سندات الصرف للشركة
+                                    <?php
+                                    $company = \App\Models\Company::FindOrFail($_POST['company_id']);
+                                    echo "[ " . $company->company_name . " ]";
+                                    ?>
+                                    للخزنة
+                                    @if($_POST['safe_id'] == "all" )
+                                        [ كل الخزن ]
+                                    @else
+                                        <?php
+
+                                        $safe = \App\Models\Safe::FindOrFail($_POST['safe_id']);
+                                        echo "[ " . $safe->safe_name . " ]";
+
+                                        ?>
+                                    @endif
                                     من تاريخ
                                     [{{$_POST['from_date']}}]
                                     الى تاريخ
                                     [{{$_POST['to_date']}}]
                                 </p>
 
-                                <div class="col-lg-12 mt-5">
-                                    <p class="alert alert-default alert-md text-center"> عرض بيانات الخزنة </p>
-                                </div>
-
-                                <div class="table-responsive hoverable-table">
-                                    <table class="table table-striped table-condensed table-bordered text-center">
-                                        <thead>
-                                        <tr>
-                                            <th class="border-bottom-0 text-center">اسم الخزنة</th>
-                                            <th class="border-bottom-0 text-center"> رصيد الخزنة</th>
-                                            <th class="border-bottom-0 text-center"> نوع الخزنة</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>{{ $safe_k->safe_name}}</td>
-                                            <td>{{ $safe_k->balance }}</td>
-                                            <td>{{ $safe_k->type }}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="col-lg-12 mt-5">
-                                    <p class="alert alert-default alert-md text-center"> عرض سندات قبض الخزنة </p>
-                                </div>
                                 <div class="table-responsive table-hover">
                                     <table id="example-table"
                                            class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
                                         <thead>
                                         <tr>
                                             <th class="border-bottom-0 text-center">#</th>
-                                            <th class="border-bottom-0 text-center"> الشركة (العميل)</th>
+                                            <th class="border-bottom-0 text-center"> الشركة</th>
+                                            <th class="border-bottom-0 text-center"> الخزنة</th>
                                             <th class="border-bottom-0 text-center"> المبلغ</th>
+                                            <th class="border-bottom-0 text-center"> ملاحظات</th>
                                             <th class="border-bottom-0 text-center"> تاريخ الدفع</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @php
-                                            $i = 0;$total_paid = 0;
+                                            $i = 0;
                                         @endphp
 
-                                        @foreach ($receipts as $key => $receipt)
+                                        @foreach ($vouchers as $voucher)
                                             <tr>
                                                 <td>{{ ++$i }}</td>
                                                 <td>
                                                     <a target="_blank"
-                                                       href="{{route('supervisor.companies.show',$receipt->company->id)}}">
-                                                        {{ $receipt->company->company_name }}
+                                                       href="{{route('supervisor.companies.show',$voucher->company->id)}}">
+                                                        {{ $voucher->company->company_name}}
                                                     </a>
                                                 </td>
-                                                <td>{{ $receipt->amount }}</td>
-                                                <td>{{ date('Y-m-d',strtotime($receipt->created_at)) }}</td>
+                                                <td>
+                                                    <a target="_blank"
+                                                       href="{{route('supervisor.safes.show',$voucher->safe->id)}}">
+                                                        {{ $voucher->safe->safe_name }}
+                                                    </a>
+                                                </td>
+                                                <td>{{ $voucher->amount }}</td>
+                                                <td>{{ $voucher->notes }}</td>
+                                                <td>{{ date('Y-m-d',strtotime($voucher->created_at)) }}</td>
                                             </tr>
-                                            <?php $total_paid = $total_paid + $receipt->amount; ?>
                                         @endforeach
                                         </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
-                                <table class="table table-bordered mt-5 mb-5 text-center">
-                                    <thead>
-                                    <tr>
-                                        <th>اجمالى المبالغ المدفوعة الى الخزنة</th>
-                                        <th>رصيد الخزنة الحالى</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>{{$total_paid}}</td>
-                                        <td>{{$safe_k->balance}}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <div class="mt-4 mb-4 text-center bg-info text-white p-2 fw-bold"
+                                     style="font-size: 20px!important;">
+                                    الاجمالى :
+                                    <?php
+                                    $total = 0;
+                                    if (!$vouchers->isEmpty()) {
+                                        foreach ($vouchers as $voucher) {
+                                            $total = $total + $voucher->amount;
+                                        }
+                                    }
+                                    ?>
+                                    {{$total}}
+                                </div>
 
                             </div>
                         </div>
                         @if(isset($_POST['submit']))
-                            <form action="{{route('safes.print')}}" method="post" class="d-inline">
+                            <form action="{{route('voucher.print')}}" method="post" class="d-block mt-3 mb-3">
                                 @csrf
                                 @method('POST')
                                 <input type="hidden" name="from_date" value="{{$_POST['from_date']}}"/>
                                 <input type="hidden" name="to_date" value="{{$_POST['to_date']}}"/>
+                                <input type="hidden" name="company_id" id="companyid" value="{{$_POST['company_id']}}"/>
                                 <input type="hidden" name="safe_id" id="safeid" value="{{$_POST['safe_id']}}"/>
                                 <button type="submit" class="btn btn-primary pd-x-20">
                                     <i class="fa fa-print"></i>
@@ -197,6 +216,9 @@
 <script>
     $(document).ready(function () {
         $('#example-table').DataTable({
+            "columnDefs": [
+                {"orderable": false, "targets": [14]}
+            ],
             "order": [[0, "desc"]]
         });
     });

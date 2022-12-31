@@ -15,7 +15,7 @@
 @section('content')
     <!-- main-content closed -->
     @if (count($errors) > 0)
-        <div class="alert alert-danger">
+        <div class="alert alert-default">
             <strong>Errors :</strong>
             <ul>
                 @foreach ($errors->all() as $error)
@@ -67,7 +67,7 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                            <button class="btn btn-primary pd-x-20" type="submit">
+                            <button class="btn btn-primary pd-x-20" type="submit" name="submit">
                                 عرض التقرير
                             </button>
                         </div>
@@ -75,7 +75,7 @@
                     @if(isset($bills_containers) && !$bills_containers->isEmpty())
                         <div class="row mt-3 mb-3">
                             <div class="col-md-12">
-                                <p class="alert alert-success alert-md text-center">
+                                <p class="alert alert-default alert-md text-center">
                                     تقرير حركة الحاوية
                                     [ {{$container_k->name}} ]
                                     من تاريخ
@@ -84,7 +84,7 @@
                                     [{{$_POST['to_date']}}]
                                 </p>
                                 <div class="col-lg-12 mt-5">
-                                    <p class="alert alert-danger alert-md text-center"> عرض بيانات الحاوية </p>
+                                    <p class="alert alert-default alert-md text-center"> عرض بيانات الحاوية </p>
                                 </div>
                                 <div class="table-responsive hoverable-table">
                                     <table class="table table-striped table-condensed table-bordered text-center">
@@ -109,7 +109,7 @@
                                     </table>
                                 </div>
                                 <div class="col-lg-12 mt-5">
-                                    <p class="alert alert-danger alert-md text-center"> عرض فواتير الحاوية
+                                    <p class="alert alert-default alert-md text-center"> عرض فواتير الحاوية
 
                                         من تاريخ
                                         [{{$_POST['from_date']}}]
@@ -262,7 +262,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="col-lg-12 mt-5">
-                                    <p class="alert alert-danger alert-md text-center"> عرض احصائيات فواتير الحاوية
+                                    <p class="alert alert-default alert-md text-center"> عرض احصائيات فواتير الحاوية
 
                                         من تاريخ
                                         [{{$_POST['from_date']}}]
@@ -310,10 +310,21 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                {{--                                <a class="btn btn-md btn-primary" href="javascript:;" onclick="window.print();">--}}
-                                {{--                                    <i class="fa fa-print"></i>--}}
-                                {{--                                    طباعة التقرير--}}
-                                {{--                                </a>--}}
+
+                                @if(isset($_POST['submit']))
+                                    <form action="{{route('container.movement.print')}}" method="post" class="d-inline">
+                                        @csrf
+                                        @method('POST')
+                                        <input type="hidden" name="from_date" value="{{$_POST['from_date']}}"/>
+                                        <input type="hidden" name="to_date" value="{{$_POST['to_date']}}"/>
+                                        <input type="hidden" name="container_id" id="containerid" value="{{$_POST['container_id']}}"/>
+                                        <button type="submit" class="btn btn-primary pd-x-20">
+                                            <i class="fa fa-print"></i>
+                                            طباعة التقرير
+                                        </button>
+                                    </form>
+                                @endif
+
                             </div>
                         </div>
                     @endif

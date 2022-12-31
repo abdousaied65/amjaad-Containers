@@ -77,7 +77,7 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                            <button class="btn btn-primary pd-x-20" type="submit">
+                            <button class="btn btn-primary pd-x-20" type="submit" name="submit">
                                 عرض التقرير
                             </button>
                         </div>
@@ -85,7 +85,7 @@
                     @if(isset($bills) && !$bills->isEmpty())
                         <div class="row mt-3 mb-3">
                             <div class="col-md-12">
-                                <p class="alert alert-success alert-md text-center">
+                                <p class="alert alert-default alert-md text-center">
                                     تقرير الشركة
                                     [ {{$company_k->company_name}} ]
                                     من تاريخ
@@ -94,7 +94,7 @@
                                     [{{$_POST['to_date']}}]
                                 </p>
                                 <div class="col-lg-12 mt-5">
-                                    <p class="alert alert-danger alert-md text-center"> عرض بيانات الشركة </p>
+                                    <p class="alert alert-default alert-md text-center"> عرض بيانات الشركة </p>
                                 </div>
 
                                 <div class="table-responsive hoverable-table">
@@ -126,9 +126,8 @@
                                     </table>
                                 </div>
 
-
                                 <div class="col-lg-12 mt-5">
-                                    <p class="alert alert-danger alert-md text-center">
+                                    <p class="alert alert-default alert-md text-center">
                                         عرض فواتير الشركة
                                         من تاريخ
                                         [{{$_POST['from_date']}}]
@@ -137,9 +136,9 @@
                                     </p>
                                 </div>
                                 <div class="table-responsive table-hover">
-                        <table id="example-table"
-                               class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
-                            <thead>
+                                    <table id="example-table"
+                                           class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
+                                        <thead>
                                         <tr>
                                             <th class="border-bottom-0 text-center">#</th>
                                             <th class="border-bottom-0 text-center">
@@ -291,7 +290,7 @@
                                 <div class="clearfix"></div>
 
                                 <div class="col-lg-12 mt-5">
-                                    <p class="alert alert-danger alert-md text-center">
+                                    <p class="alert alert-default alert-md text-center">
                                         عرض احصائيات فواتير الشركة
                                         من تاريخ
                                         [{{$_POST['from_date']}}]
@@ -341,8 +340,8 @@
                                 </table>
 
                                 <div class="col-lg-12 mt-5">
-                                    <p class="alert alert-danger alert-md text-center">
-                                        عرض مدفوعات الشركة
+                                    <p class="alert alert-default alert-md text-center">
+                                        عرض سندات قبض الشركة
                                         من تاريخ
                                         [{{$_POST['from_date']}}]
                                         الى تاريخ
@@ -350,9 +349,9 @@
                                     </p>
                                 </div>
                                 <div class="table-responsive table-hover">
-                                <table id="example-table"
-                                       class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
-                                    <thead>
+                                    <table id="example-table"
+                                           class="table table-bordered table-condensed text-center justify-content-center w-100 display dataTable">
+                                        <thead>
                                         <tr>
                                             <th class="border-bottom-0 text-center">#</th>
                                             <th class="border-bottom-0 text-center"> الخزنة</th>
@@ -365,19 +364,19 @@
                                             $i = 0;$total_paid = 0;
                                         @endphp
 
-                                        @foreach ($payments as $key => $payment)
+                                        @foreach ($receipts as $key => $receipt)
                                             <tr>
                                                 <td>{{ ++$i }}</td>
                                                 <td>
                                                     <a target="_blank"
-                                                       href="{{route('supervisor.safes.show',$payment->safe->id)}}">
-                                                        {{ $payment->safe->safe_name }}
+                                                       href="{{route('supervisor.safes.show',$receipt->safe->id)}}">
+                                                        {{ $receipt->safe->safe_name }}
                                                     </a>
                                                 </td>
-                                                <td>{{ $payment->amount }}</td>
-                                                <td>{{ date('Y-m-d',strtotime($payment->created_at)) }}</td>
+                                                <td>{{ $receipt->amount }}</td>
+                                                <td>{{ date('Y-m-d',strtotime($receipt->created_at)) }}</td>
                                             </tr>
-                                            <?php $total_paid = $total_paid + $payment->amount; ?>
+                                            <?php $total_paid = $total_paid + $receipt->amount; ?>
                                         @endforeach
                                         <tr>
                                             <td colspan="2">
@@ -394,6 +393,19 @@
                                 </div>
                             </div>
                         </div>
+                        @if(isset($_POST['submit']))
+                            <form action="{{route('companies.print')}}" method="post" class="d-inline">
+                                @csrf
+                                @method('POST')
+                                <input type="hidden" name="from_date" value="{{$_POST['from_date']}}"/>
+                                <input type="hidden" name="to_date" value="{{$_POST['to_date']}}"/>
+                                <input type="hidden" name="company_id" id="companyid" value="{{$_POST['company_id']}}"/>
+                                <button type="submit" class="btn btn-primary pd-x-20">
+                                    <i class="fa fa-print"></i>
+                                    طباعة التقرير
+                                </button>
+                            </form>
+                        @endif
                     @endif
                 </div>
             </div>

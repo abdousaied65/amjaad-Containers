@@ -12,9 +12,9 @@ class Safe extends Model
         'safe_name','balance','type'
     ];
 
-    public function payments()
+    public function receipts()
     {
-        return $this->hasMany('\App\Models\Payment', 'safe_id', 'id');
+        return $this->hasMany('\App\Models\Receipt', 'safe_id', 'id');
     }
 
 

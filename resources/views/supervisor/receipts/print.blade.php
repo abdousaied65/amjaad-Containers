@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title> طباعة المدفوعات </title>
+    <title> طباعة سندات القبض </title>
     <meta charset="utf-8"/>
     <link href="{{asset('/admin-assets/css/bootstrap.min.css')}}" rel="stylesheet"/>
     <style type="text/css" media="screen">
@@ -49,6 +49,8 @@
         .no-print, .noprint {
             display: none;
         }
+
+
     </style>
 </head>
 <body style="background: #fff">
@@ -62,7 +64,7 @@
     </tr>
     <tr>
         <td>
-            <h4 class="text-center mt-2 mb-4">طباعة كل المدفوعات</h4>
+            <h4 class="text-center mt-2 mb-4">طباعة كل سندات القبض </h4>
             <table dir="rtl" class="table table-condensed display table-bordered text-center">
                 <thead>
                 <tr>
@@ -70,6 +72,7 @@
                     <th class="border-bottom-0 text-center"> الشركة</th>
                     <th class="border-bottom-0 text-center"> الخزنة</th>
                     <th class="border-bottom-0 text-center"> المبلغ</th>
+                    <th class="border-bottom-0 text-center"> ملاحظات</th>
                     <th class="border-bottom-0 text-center"> تاريخ الدفع </th>
                 </tr>
                 </thead>
@@ -77,23 +80,24 @@
                 @php
                     $i = 0;
                 @endphp
-                @foreach ($payments as $payment)
+                @foreach ($receipts as $receipt)
                     <tr>
                         <td>{{ ++$i }}</td>
                         <td>
                             <a target="_blank"
-                               href="{{route('supervisor.companies.show',$payment->company->id)}}">
-                                {{ $payment->company->company_name}}
+                               href="{{route('supervisor.companies.show',$receipt->company->id)}}">
+                                {{ $receipt->company->company_name}}
                             </a>
                         </td>
                         <td>
                             <a target="_blank"
-                               href="{{route('supervisor.safes.show',$payment->safe->id)}}">
-                                {{ $payment->safe->safe_name }}
+                               href="{{route('supervisor.safes.show',$receipt->safe->id)}}">
+                                {{ $receipt->safe->safe_name }}
                             </a>
                         </td>
-                        <td>{{ $payment->amount }}</td>
-                        <td>{{ date('Y-m-d',strtotime($payment->created_at)) }}</td>
+                        <td>{{ $receipt->amount }}</td>
+                        <td>{{ $receipt->notes }}</td>
+                        <td>{{ date('Y-m-d',strtotime($receipt->created_at)) }}</td>
                     </tr>
                 @endforeach
                 </tbody>

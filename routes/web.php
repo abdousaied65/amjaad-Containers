@@ -143,28 +143,56 @@ Route::group(
     // Reports
     Route::get('container-movement-report', 'ReportController@container_movement_report')->name('container.movement.report');
     Route::post('container-movement-report', 'ReportController@container_movement_report_post')->name('container.movement.report.post');
+    Route::post('container-movement-print', 'ReportController@container_movement_print')->name('container.movement.print');
 
     Route::get('companies-report', 'ReportController@companies_report')->name('companies.report');
     Route::post('companies-report', 'ReportController@companies_report_post')->name('companies.report.post');
+    Route::post('companies-print', 'ReportController@companies_print')->name('companies.print');
 
     Route::get('safes-report', 'ReportController@safes_report')->name('safes.report');
     Route::post('safes-report', 'ReportController@safes_report_post')->name('safes.report.post');
+    Route::post('safes-print', 'ReportController@safes_print')->name('safes.print');
 
     Route::get('rental-container-report', 'ReportController@rental_container_report')->name('rental.container.report');
+    Route::post('rental-container-report-post', 'ReportController@rental_container_report_post')->name('rental.container.report.post');
+    Route::post('rental-container-print', 'ReportController@rental_container_print')->name('rental.container.print');
 
     Route::get('daily-safe', 'ReportController@daily_safe')->name('daily.safe');
+    Route::post('daily-safe-post', 'ReportController@daily_safe_post')->name('daily.safe.post');
+    Route::post('daily-safe-print', 'ReportController@daily_safe_print')->name('daily.safe.print');
 
-    // payments Routes
-    Route::resource('payments', 'PaymentController')->names([
-        'index' => 'supervisor.payments.index',
-        'create' => 'supervisor.payments.create',
-        'store' => 'supervisor.payments.store',
+    Route::get('receipt-report', 'ReportController@receipt_report')->name('receipt.report');
+    Route::post('receipt-report', 'ReportController@receipt_report_post')->name('receipt.report.post');
+    Route::post('receipt-print', 'ReportController@receipt_print')->name('receipt.print');
+
+    Route::get('voucher-report', 'ReportController@voucher_report')->name('voucher.report');
+    Route::post('voucher-report', 'ReportController@voucher_report_post')->name('voucher.report.post');
+    Route::post('voucher-print', 'ReportController@voucher_print')->name('voucher.print');
+
+
+    // receipts Routes
+    Route::resource('receipts', 'ReceiptController')->names([
+        'index' => 'supervisor.receipts.index',
+        'create' => 'supervisor.receipts.create',
+        'store' => 'supervisor.receipts.store',
     ]);
-    Route::get('/print-selected-payments', 'PaymentController@print_selected')->name('print.selected.payments');
-    Route::post('/export-payments-excel', 'PaymentController@export_payments_excel')->name('export.payments.excel');
-    Route::post('/select-payments', 'PaymentController@select_payments')->name('select.payments');
+    Route::get('/print-selected-receipts', 'ReceiptController@print_selected')->name('print.selected.receipts');
+    Route::post('/export-receipts-excel', 'ReceiptController@export_receipts_excel')->name('export.receipts.excel');
+    Route::post('/select-receipts', 'ReceiptController@select_receipts')->name('select.receipts');
 
-    Route::post('/print-posted-payments', 'PaymentController@print_posted')->name('print.posted.payments');
+    Route::post('/print-posted-receipts', 'ReceiptController@print_posted')->name('print.posted.receipts');
+
+    // vouchers Routes
+    Route::resource('vouchers', 'VoucherController')->names([
+        'index' => 'supervisor.vouchers.index',
+        'create' => 'supervisor.vouchers.create',
+        'store' => 'supervisor.vouchers.store',
+    ]);
+    Route::get('/print-selected-vouchers', 'VoucherController@print_selected')->name('print.selected.vouchers');
+    Route::post('/export-vouchers-excel', 'VoucherController@export_vouchers_excel')->name('export.vouchers.excel');
+    Route::post('/select-vouchers', 'VoucherController@select_vouchers')->name('select.vouchers');
+
+    Route::post('/print-posted-vouchers', 'VoucherController@print_posted')->name('print.posted.vouchers');
 
 
     // unexecuted
@@ -188,7 +216,6 @@ Route::group(
 
     Route::post('save-unexecuted', 'UnexecutedBillController@save_unexecuted')->name('save.unexecuted');
 
-
     // search
 
     Route::post('search-executed-by-company', 'SearchController@search_executed_by_company')->name('search.executed.by.company');
@@ -200,6 +227,19 @@ Route::group(
     Route::post('search-unexecuted-by-phone', 'SearchController@search_unexecuted_by_phone')->name('search.unexecuted.by.phone');
     Route::post('search-unexecuted-by-bill', 'SearchController@search_unexecuted_by_bill')->name('search.unexecuted.by.bill');
 
+    // terms
+    Route::resource('terms', 'TermController')->names([
+        'index' => 'supervisor.terms.index',
+        'create' => 'supervisor.terms.create',
+        'update' => 'supervisor.terms.update',
+        'destroy' => 'supervisor.terms.destroy',
+        'edit' => 'supervisor.terms.edit',
+        'store' => 'supervisor.terms.store',
+        'show' => 'supervisor.terms.show',
+    ]);
+    Route::post('/remove-selected-terms', 'TermController@remove_selected')->name('remove.selected.terms');
+    Route::get('/print-selected-terms', 'TermController@print_selected')->name('print.selected.terms');
+    Route::post('/export-terms-excel', 'TermController@export_terms_excel')->name('export.terms.excel');
 
 });
 ?>

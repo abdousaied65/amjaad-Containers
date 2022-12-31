@@ -102,6 +102,9 @@
                         <h1>
                             فاتورة ضريبية مبسطة
                         </h1>
+                        <h1>
+                            عقد حاويات
+                        </h1>
                     </td>
                     <td class="text-left" style="width: 30%!important;">
                         {{$settings->company_name_en}}
@@ -154,6 +157,9 @@
                         <tr>
                             <td> رقم القطعة :
                                 {{$bill->contract->plot_number}}
+                            </td>
+                            <td> الرقم الضريبى  :
+                                {{$bill->company->tax_number}}
                             </td>
                             <td> مسطح البناء :
                                 {{$bill->contract->flat_construction}}
@@ -257,32 +263,13 @@
             </div>
             <div dir="rtl" class="text-right">
                 <ol>
-                    <li>
-                        مدة بقاء الحاوية في الموقع أربع أيام وذلك من نزولها سواء امتلأت أو لم تمتلئ .
-                    </li>
-                    <li>
-                        في حالة امتلائها الاتصال على الرقم :
-                        {{$settings->phone_number}}
-                        .
-                    </li>
-                    <li>
-                        المبلغ المدفوع يعتبر لكل رد واحد للحاوية الواحدة
-                    </li>
-                    <li>
-                        الحمولة تكون مستوى الحاوية من أعلى وعدم زيادة الحمولة
-                    </li>
-                    <li>
-                        في حالة إتلاف أو ضرر الحاوية من الطرف الثاني يقوم بإصالحها
-                    </li>
-                    <li>
-                        نزول الحاوية في موقع واحد فقط وعدم نقلها إلى موقع أخر
-                    </li>
-                    <li>
-                        المبلغ المدفوع لا يسترد بعد استخراج الترخيص
-                    </li>
-                    <li>
-                        على الطرف الثاني سداد رسوم المكب قبل طلب الحاوية
-                    </li>
+                    @if(isset($terms) && !$terms->isEmpty())
+                        @foreach($terms as $term)
+                            <li>
+                                {{$term->term}}
+                            </li>
+                        @endforeach
+                    @endif
                 </ol>
             </div>
 

@@ -24,9 +24,9 @@
                                 </span>
                                 </div>
 
-                                @if (session('message'))
+                                @if (session('status'))
                                     <div class="alert alert-success text-center" role="alert">
-                                        {{ session('message') }}
+                                        {{ session('status') }}
                                     </div>
                                 @endif
                                 <div class="col-12">
